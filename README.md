@@ -9,7 +9,8 @@
 팀원 : 권진혁, 이승현, 최신혜
 
 🎶 팀 노션 페이지
-url
+
+[url](https://www.notion.so/1-636bf28acb9f407c95b86caff8a292fa)
 
 🛠 주제 선정
 
