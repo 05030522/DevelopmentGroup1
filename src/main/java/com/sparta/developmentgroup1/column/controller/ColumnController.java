@@ -15,21 +15,20 @@ public class ColumnController {
     private final ColumnService columnService;
 
     @PostMapping("/columns")
-    public ResponseEntity<String> createColumn(@RequestBody ColumnRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        columnService.createColumn(requestDto, userDetails);
+    public ResponseEntity<String> createColumn(@RequestBody ColumnRequestDto requestDto) {
+        columnService.createColumn(requestDto);
         return ResponseEntity.ok("컬럼 생성 완료");
     }
 
     @PutMapping("/columns/{id}")
-    public ResponseEntity<String> updateColumn(@RequestBody ColumnUpdateRequestDto requestDto, @PathVariable Long id,
-                                               @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        columnService.updateColumn(requestDto, id, userDetails);
+    public ResponseEntity<String> updateColumn(@RequestBody ColumnUpdateRequestDto requestDto, @PathVariable Long id) {
+        columnService.updateColumn(requestDto, id);
         return ResponseEntity.ok("컬럼명 수정 완료");
     }
 
     @DeleteMapping("/columns/{id}")
-    public ResponseEntity<String> deleteColumn(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        columnService.deleteColumn(id, userDetails);
+    public ResponseEntity<String> deleteColumn(@PathVariable Long id) {
+        columnService.deleteColumn(id);
         return ResponseEntity.ok("컬럼 삭제 완료");
     }
 }
