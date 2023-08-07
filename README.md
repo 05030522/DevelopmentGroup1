@@ -65,7 +65,7 @@
 
 💡 API
 
-💡 ERD
+[💡 ERD](https://lucid.app/lucidchart/a495d356-1c39-4a38-8e0d-91466ceb07f4/edit?invitationId=inv_4e7b96c7-28fa-4248-a7ed-3753803970fe&page=0_0#)
 
 💡 역할 배분
 
