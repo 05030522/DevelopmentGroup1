@@ -60,7 +60,10 @@
         - 카드에 마감일을 설정하고 관리할 수 있어야 합니다.
 
 💡 사용하는 기술
+
 <img src="https://img.shields.io/badge/jsonwebtokens-#000000?style=for-the-badge&logo=jsonwebtokens-&logoColor=white">
+
+
 <img src="https://img.shields.io/badge/표시할이름-색상?style=for-the-badge&logo=기술스택아이콘&logoColor=white">
 <img src="https://img.shields.io/badge/표시할이름-색상?style=for-the-badge&logo=기술스택아이콘&logoColor=white">
 <img src="https://img.shields.io/badge/표시할이름-색상?style=for-the-badge&logo=기술스택아이콘&logoColor=white">
