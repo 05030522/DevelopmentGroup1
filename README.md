@@ -1,4 +1,4 @@
-# DevelopmentGroup1
+<img width="650" alt="image" src="https://github.com/05030522/DevelopmentGroup1/assets/132440453/bd4814da-b82d-480c-87b0-759259ba6648"># DevelopmentGroup1
 
 개발하는데,1조하겠습니다_TeamProjectRepository
 
@@ -65,7 +65,8 @@
 
 💡 API
 
-[💡 ERD](https://lucid.app/lucidchart/a495d356-1c39-4a38-8e0d-91466ceb07f4/edit?invitationId=inv_4e7b96c7-28fa-4248-a7ed-3753803970fe&page=0_0#)
+💡 ERD
+<img width="650" alt="image" src="https://github.com/05030522/DevelopmentGroup1/assets/132440453/cac6fbe6-3817-45ad-ad49-cb6c964a0f02">
 
 💡 역할 배분
 
