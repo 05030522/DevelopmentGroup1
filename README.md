@@ -62,7 +62,8 @@
 💡 사용하는 기술
 
 <img src="https://img.shields.io/badge/jsonwebtokens-3776AB?style=for-the-badge&logo=jsonwebtokens&logoColor=white">
-<img src="https://img.shields.io/badge/spring-#6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+<img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+
 <img src="https://img.shields.io/badge/표시할이름-색상?style=for-the-badge&logo=기술스택아이콘&logoColor=white">
 <img src="https://img.shields.io/badge/표시할이름-색상?style=for-the-badge&logo=기술스택아이콘&logoColor=white">
 <img src="https://img.shields.io/badge/표시할이름-색상?style=for-the-badge&logo=기술스택아이콘&logoColor=white">
