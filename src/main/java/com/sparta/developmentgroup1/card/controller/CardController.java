@@ -18,29 +18,29 @@ public class CardController {
     private final CardService cardService;
 
     @PostMapping("/cards") //카드 생성
-    public ResponseEntity<CardResponseDto> createCard(@RequestBody CardRequestDto requestDto, User user) {
-        CardResponseDto result = cardService.createCard(requestDto,user.getUser());
+    public ResponseEntity<CardResponseDto> createCard(@AuthenticationPrincipal UserDetailsImpl userDetails,@RequestBody CardRequestDto requestDto) {
+        CardResponseDto result = cardService.createCard(requestDto,userDetails.getUser());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     @PutMapping("/cards/{id}") //카드 수정
-    public ResponseEntity<ApiResponseDto> updateCard(@PathVariable Long id, @RequestBody CardRequestDto requestDto,  User user) {
-        try { // 에러 응답을 위해 ApiResponseDto 사용
-            CardResponseDto result = cardService.updateCard(id, requestDto, User.getUser()); //삭제할 댓글 아이디와 수정할 내용, 유저
+    public ResponseEntity<CardResponseDto> updateCard(@AuthenticationPrincipal UserDetailsImpl userDetails,@PathVariable Long cardId, @RequestBody CardRequestDto requestDto) {
+        try {
+            CardResponseDto result = cardService.updateCard(cardId, requestDto, userDetails.getUser()); //삭제할 댓글 아이디와 수정할 내용, 유저
             return ResponseEntity.ok().body(result);
         } catch (RejectedExecutionException e) {
-            return ResponseEntity.badRequest().body(new ApiResponseDto("작성자만 수정 할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @DeleteMapping("/cards/{id}") //카드 삭제
+    public ResponseEntity<ApiResponseDto> deleteCard(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long cardId) {
+        try {
+            cardService.deleteCard(cardId, userDetails.getUser());
+            return ResponseEntity.ok().body(new ApiResponseDto("카드 삭제 성공", HttpStatus.OK.value()));
+        } catch (RejectedExecutionException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 
-    @DeleteMapping("/cards/{id}") //카드 삭제
-    public ResponseEntity<ApiResponseDto> deleteCard( @PathVariable Long id,  User user) {
-        try {
-            cardService.deleteCard(id, User.getUser());
-            return ResponseEntity.ok().body(new ApiResponseDto("카드 삭제 성공", HttpStatus.OK.value()));
-        } catch (RejectedExecutionException e) {
-            return ResponseEntity.badRequest().body(new ApiResponseDto("작성자만 삭제 할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
-        }
-    }
 }
