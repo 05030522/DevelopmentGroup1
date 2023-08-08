@@ -1,9 +1,9 @@
 package com.sparta.developmentgroup1.card.entity;
 
+import com.sparta.developmentgroup1.post.entity.Post;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Columns;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +38,8 @@ public class Card {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "column_id")//fk
-    private Column column;
+    @JoinColumn(name = "post_id")//fk
+    private Post post;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
@@ -48,8 +48,8 @@ public class Card {
         this.user = user;
     }
 
-    public void setColumn(Column column) { //연관 관계 맵핑
-        this.column = column;
+    public void setPost(Post post) { //연관 관계 맵핑
+        this.post = post;
     }
 
 }

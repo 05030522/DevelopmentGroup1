@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CardRequestDto {
-    private Long columnId;
+    private Long postId;
     private String title;
     private String description;
     private String background;
