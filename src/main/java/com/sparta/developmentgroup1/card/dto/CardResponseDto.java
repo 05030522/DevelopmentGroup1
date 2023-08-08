@@ -4,6 +4,8 @@ import com.sparta.developmentgroup1.card.entity.Card;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class CardResponseDto extends ApiResponseDto{
@@ -11,8 +13,9 @@ public class CardResponseDto extends ApiResponseDto{
     private String description;
     private String background;
     private String developer;
-    private String deadline;
-    private String username;
+
+    private LocalDateTime deadline;
+
 
     public CardResponseDto(Card card){
         this.title = card.getTitle();
@@ -20,6 +23,5 @@ public class CardResponseDto extends ApiResponseDto{
         this.background = card.getBackground();
         this.developer = card.getDeveloper();
         this.deadline = card.getDeadline();
-        this.username = card.getUser().getUsername();
     }
 }
