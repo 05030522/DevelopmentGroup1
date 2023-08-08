@@ -1,9 +1,9 @@
-package com.sparta.developmentgroup1.column.dto;
+package com.sparta.developmentgroup1.post.dto;
 
 import lombok.Getter;
 
 @Getter
-public class ColumnRequestDto {
+public class PostRequestDto {
     private Long boardId;
     private String name;
 }
