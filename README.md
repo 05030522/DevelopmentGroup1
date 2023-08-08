@@ -105,6 +105,12 @@ ex) Backlog, In Progress, Done → Backlog, Done, In Progress
 
 
 
+💡 사용한 기술
+
+<img width="148" alt="기술스택" src="https://github.com/05030522/DevelopmentGroup1/assets/132440453/5af3d483-e79c-4c76-a932-d523ba77e38d">
+
+
+
 
 💡 그 외 구현 포인트
 
@@ -116,6 +122,7 @@ ex) Backlog, In Progress, Done → Backlog, Done, In Progress
 
 
 💡 API
+
 <img width="233" alt="api" src="https://github.com/05030522/DevelopmentGroup1/assets/132440453/4aa04d53-b6dc-4e1e-8aba-5db9c3698274">
 
 
@@ -124,6 +131,7 @@ ex) Backlog, In Progress, Done → Backlog, Done, In Progress
 
 
 💡 ERD
+
 ![ERD](https://github.com/05030522/DevelopmentGroup1/assets/132440453/0a03ed4e-551b-41d9-a5eb-2059ba455dc7)
 
 
