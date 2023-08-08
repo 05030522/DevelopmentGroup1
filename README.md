@@ -1,26 +1,52 @@
 # DevelopmentGroup1
 
+
+
 개발하는데,1조하겠습니다_TeamProjectRepository
 
+
+
 2023년 08월 07일 시작
+
+
+
+
 
 팀장 : 이경원님
 
 팀원 : 권진혁님, 이승현님, 최신혜님
 
+
+
+
+
 [🎶 팀 노션 페이지](https://www.notion.so/1-44ca40335c5b40f7aaf8c3830955c0c3)
+
+
+
+
 
 🛠 프로젝트 주제
 
 칸반 보드 기반 서비스로 유명한 Trello와 같은 “프로젝트 협업 사이트”를 만드는 것 입니다.
 
+
+
+
+
 🛠 프로젝트 설계 단계
 
 주제 선정 -> 요구 사항 확인 -> APT 작성 -> ERD 작성 -> 와이어 프레임 작성 -> 역할 배분 -> 협업 규칙 작성 -> PR할 Repository 생성
 
+
+
+
 🛠 프로젝트 명
 
 DevelopmentGroup1
+
+
+
 
 💡 필수 요구 사항
 
@@ -71,18 +97,39 @@ ex) Backlog, In Progress, Done → Backlog, Done, In Progress
 1. 댓글 달기 (협업하는 사람들끼리 카드에 대한 토론이 이루어질 수 있어야 합니다.)
  
 2. 날짜 지정 (카드에 마감일을 설정하고 관리할 수 있어야 합니다.)
+
+
+
               
 💡 추가 구현
+
+
+
 
 💡 그 외 구현 포인트
 
 [💡 와이어 프레임](https://docs.google.com/presentation/d/1AIsqyn0MsqOcSKQ8VMwY3nK1SHSM6JjKOdSBWeQ9ZJQ/edit#slide=id.p)
 
+
+
+
+
+
 💡 API
 <img width="233" alt="api" src="https://github.com/05030522/DevelopmentGroup1/assets/132440453/4aa04d53-b6dc-4e1e-8aba-5db9c3698274">
 
+
+
+
+
+
 💡 ERD
 ![ERD](https://github.com/05030522/DevelopmentGroup1/assets/132440453/0a03ed4e-551b-41d9-a5eb-2059ba455dc7)
+
+
+
+
+
 
 💡 역할 배분
 
@@ -99,6 +146,7 @@ ex) Backlog, In Progress, Done → Backlog, Done, In Progress
 - ERD 작성
 
 
+
 권진혁님- 보드 관리 기능
 
 - 보드 생성
@@ -108,6 +156,7 @@ ex) Backlog, In Progress, Done → Backlog, Done, In Progress
 - 보드 삭제 (생성한 사용자만 삭제 가능)
   
 - 보드 초대 (협업할 사용자 초대)
+
 
   
 이승현님- 사용자 관리 기능
@@ -119,6 +168,7 @@ ex) Backlog, In Progress, Done → Backlog, Done, In Progress
 - JWT Securiyt 적용
 
 - 사용자 정보 수정
+
 
   
 최신혜님- 카드 관리 기능, 카드 상세 기능
