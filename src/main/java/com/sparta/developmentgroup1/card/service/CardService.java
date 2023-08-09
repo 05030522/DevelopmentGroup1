@@ -27,13 +27,10 @@ public class CardService {
     //카드 생성
     public CardResponseDto createCard(CardRequestDto requestDto, User user) {
         //칼럼 있는지 확인
-
         Post post = postRepository.findPost(requestDto.getPostId());
         int lastindex = post.getCardList.size();
-
         //새로운 카드 만들기
-        Card card = new Card(requestDto, post);
-      
+        Card card = new Card(requestDto, post, lastindex + 1);
         card.setUser(user); //유저 정보 받고
         card.setPost(post); //조회한 칼럼 받고
         var savedCard = cardRepository.save(card); //DB에 저장
