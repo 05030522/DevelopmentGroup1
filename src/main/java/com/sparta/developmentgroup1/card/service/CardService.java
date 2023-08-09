@@ -1,19 +1,16 @@
 package com.sparta.developmentgroup1.card.service;
 
-import com.sparta.developmentgroup1.cardComment.dto.CardCommentResponseDto;
-import com.sparta.developmentgroup1.card.dto.CardIndexInfo;
 import com.sparta.developmentgroup1.card.dto.CardIndexUpdateRequestDto;
 import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.card.dto.CardResponseDto;
 import com.sparta.developmentgroup1.card.entity.Card;
 import com.sparta.developmentgroup1.card.entity.CardIndexInfo;
 import com.sparta.developmentgroup1.card.repository.CardRepository;
+import com.sparta.developmentgroup1.cardComment.dto.CardCommentResponseDto;
 import com.sparta.developmentgroup1.post.entity.Post;
-import com.sparta.developmentgroup1.post.service.PostService;
-import com.sparta.developmentgroup1.post.repository.PostRepository
-
+import com.sparta.developmentgroup1.post.repository.PostRepository;
+import com.sparta.developmentgroup1.user.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Columns;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +24,8 @@ public class CardService {
     //카드 생성
     public CardResponseDto createCard(CardRequestDto requestDto, User user) {
         //칼럼 있는지 확인
-        Post post = postRepository.findPost(requestDto.getPostId());
-        int lastindex = post.getCardList.size();
+        Post post = postRepository.findById(requestDto.getPostId()).orElseThrow(()->new IllegalArgumentException("존재하지 않는 포스트입니다."));
+        int lastindex = post.getCardList().size();
         //새로운 카드 만들기
         Card card = new Card(requestDto, post, lastindex + 1);
         card.setUser(user); //유저 정보 받고
@@ -66,12 +63,8 @@ public class CardService {
                 new IllegalArgumentException("선택한 카드는 존재하지 않습니다.")
         );
     }
-    private Posts findPost(Long columnId) {
-        return postRepository.findById(postId).orElseThrow(() ->
-                new IllegalArgumentException("존재하지 않는 포스트트입니다."));
-    }
 
-    public CardCommentResponseDto createComment(Long cardId) {
-
-    }
+//    public CardCommentResponseDto createComment(Long cardId) {
+//return null;
+//    }
 }

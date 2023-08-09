@@ -1,9 +1,13 @@
 package com.sparta.developmentgroup1.post.entity;
 
 import com.sparta.developmentgroup1.boards.entity.Board;
+import com.sparta.developmentgroup1.card.entity.Card;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,6 +26,9 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", nullable = false)
     private Board board;
+
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
+    private List<Card> cardList = new ArrayList<>();
 
     public Post(String name, Board board) {
         this.name = name;

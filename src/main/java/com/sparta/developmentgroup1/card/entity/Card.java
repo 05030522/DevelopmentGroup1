@@ -4,6 +4,7 @@ package com.sparta.developmentgroup1.card.entity;
 import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.cardComment.entity.CardComment;
 import com.sparta.developmentgroup1.common.entity.Timestamped;
+import com.sparta.developmentgroup1.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,12 +55,15 @@ public class Card extends Timestamped {
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
     private List<CardComment> comments = new ArrayList<>();
 
-    public Card(CardRequestDto requestDto){
+    public Card(CardRequestDto requestDto, Post post, int index){
         this.title = requestDto.getTitle();
         this.description = requestDto.getDescription();
         this.background = requestDto.getBackground();
         this.developer = requestDto.getDeveloper();
         this.deadline = requestDto.getDeadline();
+        this.post = post;
+        this.index = index;
+
     }
     public Card update(CardRequestDto requestDto){
         this.title = requestDto.getTitle();
