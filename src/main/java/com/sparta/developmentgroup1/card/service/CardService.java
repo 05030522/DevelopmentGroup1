@@ -69,9 +69,9 @@ public class CardService {
                 new IllegalArgumentException("선택한 카드는 존재하지 않습니다.")
         );
     }
-    private Columns findColumn(Long columnId) {
-        return columnRepository.findById(columnId).orElseThrow(() ->
-                new IllegalArgumentException("존재하지 않는 컬럼입니다."));
+    private Posts findPost(Long columnId) {
+        return postRepository.findById(postId).orElseThrow(() ->
+                new IllegalArgumentException("존재하지 않는 포스트트입니다."));
     }
 
     public CardCommentResponseDto createComment(Long cardId) {
