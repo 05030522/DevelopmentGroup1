@@ -2,6 +2,7 @@ package com.sparta.developmentgroup1.cardComment.entity;
 
 import com.sparta.developmentgroup1.card.entity.Card;
 import com.sparta.developmentgroup1.common.entity.Timestamped;
+import com.sparta.developmentgroup1.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
