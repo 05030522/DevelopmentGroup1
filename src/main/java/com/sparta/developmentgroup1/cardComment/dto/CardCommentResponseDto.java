@@ -20,6 +20,6 @@ public class CardCommentResponseDto {
         this.content = content;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
-        this.author = author; // Add the author field to the constructor
+        this.author = author;
     }
 }

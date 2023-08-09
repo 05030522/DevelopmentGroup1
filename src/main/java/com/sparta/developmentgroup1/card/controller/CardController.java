@@ -5,11 +5,11 @@ import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.card.dto.CardResponseDto;
 import com.sparta.developmentgroup1.card.service.CardService;
 import com.sparta.developmentgroup1.common.dto.MsgResponseDto;
-import com.sparta.developmentgroup1.user.entity.User; // Assuming this is the correct import for your User entity
+import com.sparta.developmentgroup1.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication; // Import Authentication class
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +20,7 @@ public class CardController {
 
     @PostMapping("/cards") //카드 생성
     public ResponseEntity<CardResponseDto> createCard(@RequestBody CardRequestDto requestDto, Authentication authentication) {
-        // Get the currently logged-in user from the authentication object
+
         User user = (User) authentication.getPrincipal();
 
         CardResponseDto result = cardService.createCard(requestDto, user);

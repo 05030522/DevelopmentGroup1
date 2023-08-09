@@ -74,8 +74,8 @@ public class Card extends Timestamped {
     }
 
     public Card update(CardRequestDto requestDto) {
-        if (requestDto.getTitle() != null) {
-            this.title = requestDto.getTitle();
+        if (requestDto.getTitle() != null) { // null이 아니면
+            this.title = requestDto.getTitle(); // 수정
         }
         if (requestDto.getDescription() != null) {
             this.description = requestDto.getDescription();
