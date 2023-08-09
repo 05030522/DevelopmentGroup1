@@ -1,0 +1,14 @@
+package com.sparta.developmentgroup1.user.dto;
+
+import lombok.Getter;
+
+@Getter
+public class ApiResponseDto {
+    private int statusCode;
+    private String statusMessage;
+
+    public ApiResponseDto(int statusCode, String statusMessage) {
+        this.statusCode = statusCode;
+        this.statusMessage = statusMessage;
+    }
+}
