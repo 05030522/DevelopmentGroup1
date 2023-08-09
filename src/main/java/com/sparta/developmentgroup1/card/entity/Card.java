@@ -2,7 +2,9 @@ package com.sparta.developmentgroup1.card.entity;
 
 import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.cardComment.entity.CardComment;
+import com.sparta.developmentgroup1.cardUser.entity.CardUser;
 import com.sparta.developmentgroup1.common.entity.Timestamped;
+
 import com.sparta.developmentgroup1.post.entity.Post;
 import com.sparta.developmentgroup1.user.entity.User;
 import jakarta.persistence.*;
@@ -34,13 +36,11 @@ public class Card extends Timestamped {
     @Column(nullable = false)
     private String background;
 
-    @Column(nullable = false)
-    private String developer;
-
     @Column
     private LocalDateTime deadline;
 
     @Column(nullable = false)
+
     private int positionIndex;
 
     @ManyToOne
@@ -49,25 +49,26 @@ public class Card extends Timestamped {
 
     @ManyToOne
     @JoinColumn(name = "post_id") // fk
-    private Post post;
+
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
     private List<CardComment> comments = new ArrayList<>();
 
+
     public Card(CardRequestDto requestDto) {
+
         this.title = requestDto.getTitle();
         this.description = requestDto.getDescription();
         this.background = requestDto.getBackground();
-        this.developer = requestDto.getDeveloper();
         this.deadline = requestDto.getDeadline();
         this.positionIndex = 0;
+
     }
 
     public Card(CardRequestDto requestDto, Post post, int positionIndex) {
         this.title = requestDto.getTitle();
         this.description = requestDto.getDescription();
         this.background = requestDto.getBackground();
-        this.developer = requestDto.getDeveloper();
         this.deadline = requestDto.getDeadline();
         this.positionIndex = positionIndex; // 생성자에서 받은 값으로 설정
         this.post = post;
@@ -89,6 +90,7 @@ public class Card extends Timestamped {
         if (requestDto.getDeadline() != null) {
             this.deadline = requestDto.getDeadline();
         }
+
         return this;
     }
 

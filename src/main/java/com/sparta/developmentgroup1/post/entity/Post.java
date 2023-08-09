@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "posts")
 public class Post {
-    // @Column 사용에 문제가 생겨서 Entity 붙임
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

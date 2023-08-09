@@ -1,10 +1,12 @@
 package com.sparta.developmentgroup1.card.service;
 
+
 import com.sparta.developmentgroup1.card.dto.CardPositionInfo;
 import com.sparta.developmentgroup1.card.dto.CardPositionUpdateRequestDto;
 import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.card.dto.CardResponseDto;
 import com.sparta.developmentgroup1.card.entity.Card;
+
 import com.sparta.developmentgroup1.card.repository.CardRepository;
 import com.sparta.developmentgroup1.cardComment.dto.CardCommentResponseDto;
 import com.sparta.developmentgroup1.cardComment.entity.CardComment;
@@ -37,6 +39,7 @@ public class CardService {
         card.setPost(post);
         var savedCard = cardRepository.save(card);
         return new CardResponseDto(savedCard);
+
     }
 
     // 카드 수정
@@ -60,6 +63,7 @@ public class CardService {
             Card card = findCard(cardPositionInfo.getCardId());
             card.setPosition(cardPositionInfo.getPosition());
         }
+
     }
 
     private Card findCard(Long cardId) {

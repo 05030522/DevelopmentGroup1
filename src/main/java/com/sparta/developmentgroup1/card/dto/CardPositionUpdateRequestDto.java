@@ -1,7 +1,9 @@
 package com.sparta.developmentgroup1.card.dto;
 
+
 import lombok.Getter;
 import lombok.Setter;
+
 
 import java.util.List;
 
@@ -10,3 +12,4 @@ import java.util.List;
 public class CardPositionUpdateRequestDto {
     private List<CardPositionInfo> infoList;
 }
+

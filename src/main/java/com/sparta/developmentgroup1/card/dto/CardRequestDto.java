@@ -12,6 +12,5 @@ public class CardRequestDto {
     private String title;
     private String description;
     private String background;
-    private String developer;
     private LocalDateTime deadline;
 }

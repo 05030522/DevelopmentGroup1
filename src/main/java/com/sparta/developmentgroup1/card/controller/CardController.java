@@ -1,6 +1,5 @@
 package com.sparta.developmentgroup1.card.controller;
 
-import com.sparta.developmentgroup1.cardComment.dto.CardCommentResponseDto;
 import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.card.dto.CardResponseDto;
 import com.sparta.developmentgroup1.card.service.CardService;
@@ -19,11 +18,13 @@ public class CardController {
     private final CardService cardService;
 
     @PostMapping("/cards") //카드 생성
+
     public ResponseEntity<CardResponseDto> createCard(@RequestBody CardRequestDto requestDto, Authentication authentication) {
 
         User user = (User) authentication.getPrincipal();
 
         CardResponseDto result = cardService.createCard(requestDto, user);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
@@ -51,3 +52,4 @@ public class CardController {
         return ResponseEntity.ok().body(new MsgResponseDto("댓글 수정 성공", HttpStatus.OK.value()));
     }
 }
+
