@@ -1,11 +1,9 @@
 package com.sparta.developmentgroup1.card.controller;
 
-import com.sparta.developmentgroup1.cardComment.dto.CardCommentResponseDto;
 import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.card.dto.CardResponseDto;
 import com.sparta.developmentgroup1.card.service.CardService;
 import com.sparta.developmentgroup1.common.dto.MsgResponseDto;
-import com.sparta.developmentgroup1.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +16,8 @@ public class CardController {
     private final CardService cardService;
 
     @PostMapping("/cards") //카드 생성
-    public ResponseEntity<CardResponseDto> createCard(@RequestBody CardRequestDto requestDto, User user) {
-        CardResponseDto result = cardService.createCard(requestDto, user);
+    public ResponseEntity<CardResponseDto> createCard(@RequestBody CardRequestDto requestDto) {
+        CardResponseDto result = cardService.createCard(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
@@ -40,7 +38,7 @@ public class CardController {
 //        CardCommentResponseDto result = cardService.createComment(cardId);
 //        return ResponseEntity.status(HttpStatus.OK).body(result);
 //    }
-//
+
 //    @PutMapping("//cards/{id}/comments/{id}") //댓글 수정
 //    public ResponseEntity<MsgResponseDto> updateComment(@PathVariable Long cardId, @RequestBody CardCommentResponseDto requestDto){
 //        cardService.updateCard(cardId, requestDto);

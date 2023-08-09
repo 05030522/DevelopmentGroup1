@@ -3,6 +3,7 @@ package com.sparta.developmentgroup1.card.entity;
 
 import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.cardComment.entity.CardComment;
+import com.sparta.developmentgroup1.cardUser.entity.CardUser;
 import com.sparta.developmentgroup1.common.entity.Timestamped;
 import com.sparta.developmentgroup1.user.entity.User;
 import jakarta.persistence.*;
@@ -35,18 +36,11 @@ public class Card extends Timestamped {
     @Column(nullable = false)
     private String background;
 
-    @Column(nullable = false)
-    private String developer;
-
     @Column
     private LocalDateTime deadline; // 시간비교. Calender클래스의 getTimeInMills()라는 함수를 이용하여 반화해야됨.. 어떻게하지이~??
 
     @Column(nullable = false)
     private int position;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")//fk
-    private User user;
 
     @ManyToOne
     @JoinColumn(name = "post_id")//fk
@@ -55,21 +49,21 @@ public class Card extends Timestamped {
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
     private List<CardComment> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
+    private List<CardUser> cardUsers = new ArrayList<>();
+
     public Card(CardRequestDto requestDto, Post post, int position){
         this.title = requestDto.getTitle();
         this.description = requestDto.getDescription();
         this.background = requestDto.getBackground();
-        this.developer = requestDto.getDeveloper();
         this.deadline = requestDto.getDeadline();
         this.post = post;
         this.position = position;
-
     }
     public Card update(CardRequestDto requestDto){
         this.title = requestDto.getTitle();
         this.description = requestDto.getDescription();
         this.background = requestDto.getBackground();
-        this.developer = requestDto.getDeveloper();
         this.deadline = requestDto.getDeadline();
         return this;
     }
