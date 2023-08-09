@@ -1,24 +1,24 @@
 package com.sparta.developmentgroup1.card.entity;
 
-
 import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.cardComment.entity.CardComment;
 import com.sparta.developmentgroup1.common.entity.Timestamped;
+import com.sparta.developmentgroup1.post.entity.Post;
+import com.sparta.developmentgroup1.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.sparta.developmentgroup1.post.entity.Post;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity // JPA가 관리할 수 있는 Entity 클래스 지정
+@Entity
 @Getter
 @Setter
-@Table(name = "card") // 매핑할 테이블의 이름을 지정
-@NoArgsConstructor //기본 생성자를 만들어줌
+@Table(name = "card")
+@NoArgsConstructor
 public class Card extends Timestamped {
 
     @Id
@@ -38,40 +38,71 @@ public class Card extends Timestamped {
     private String developer;
 
     @Column
-    private LocalDateTime deadline; // 시간비교. Calender클래스의 getTimeInMills()라는 함수를 이용하여 반화해야됨.. 어떻게하지이~??
+    private LocalDateTime deadline;
 
     @Column(nullable = false)
-    private int index;
+    private int positionIndex;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")//fk
+    @JoinColumn(name = "user_id") // fk
     private User user;
 
     @ManyToOne
-
-    @JoinColumn(name = "post_id")//fk
+    @JoinColumn(name = "post_id") // fk
     private Post post;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
     private List<CardComment> comments = new ArrayList<>();
 
-    public Card(CardRequestDto requestDto){
+    public Card(CardRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.description = requestDto.getDescription();
         this.background = requestDto.getBackground();
         this.developer = requestDto.getDeveloper();
         this.deadline = requestDto.getDeadline();
-    }
-    public Card update(CardRequestDto requestDto){
-        this.title = requestDto.getTitle();
-        this.description = requestDto.getDescription();
-        this.background = requestDto.getBackground();
-        this.developer = requestDto.getDeveloper();
-        this.deadline = requestDto.getDeadline();
+        this.positionIndex = 0;
     }
 
-    public void setPost(Post post) { //연관 관계 맵핑
+    public Card(CardRequestDto requestDto, Post post, int positionIndex) {
+        this.title = requestDto.getTitle();
+        this.description = requestDto.getDescription();
+        this.background = requestDto.getBackground();
+        this.developer = requestDto.getDeveloper();
+        this.deadline = requestDto.getDeadline();
+        this.positionIndex = positionIndex; // 생성자에서 받은 값으로 설정
         this.post = post;
     }
-}
 
+    public Card update(CardRequestDto requestDto) {
+        if (requestDto.getTitle() != null) {
+            this.title = requestDto.getTitle();
+        }
+        if (requestDto.getDescription() != null) {
+            this.description = requestDto.getDescription();
+        }
+        if (requestDto.getBackground() != null) {
+            this.background = requestDto.getBackground();
+        }
+        if (requestDto.getDeveloper() != null) {
+            this.developer = requestDto.getDeveloper();
+        }
+        if (requestDto.getDeadline() != null) {
+            this.deadline = requestDto.getDeadline();
+        }
+        return this;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public void setPosition(int position) {
+        this.positionIndex = position;
+    }
+
+    public void addComment(CardComment comment) {
+        comments.add(comment);
+        comment.setCard(this);
+    }
+
+}

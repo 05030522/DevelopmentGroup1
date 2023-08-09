@@ -2,6 +2,7 @@ package com.sparta.developmentgroup1.cardComment.entity;
 
 import com.sparta.developmentgroup1.card.entity.Card;
 import com.sparta.developmentgroup1.common.entity.Timestamped;
+import com.sparta.developmentgroup1.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,15 +16,42 @@ public class CardComment extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //pk
 
-    //댓글 내용
     @Column(nullable = false)
     private String content;
 
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")//fk
-    private User user; //여러개의 댓글을 한 유저가 행할 수 있음. 단방향
+    @Column(nullable = false)
+    private String author;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")//fk
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")//fk
-    private Card card; //양방향
+    private Card card;
+
+    public CardComment(String content, String author) {
+        this.content = content;
+        this.author = author;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 }

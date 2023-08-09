@@ -73,4 +73,9 @@ public class UserService {
         res.setHeader(JwtUtil.AUTHORIZATION_HEADER, token);
 
     }
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+    }
+
 }
