@@ -31,7 +31,6 @@ public class CardService {
         Post post = postRepository.findPost(requestDto.getColumnId());
         int lastindex = post.getCardList.size();
 
-        Post post = postServ
         //새로운 카드 만들기
         Card card = new Card(requestDto, post);
       
