@@ -48,7 +48,6 @@ public class Card extends Timestamped {
     private User user;
 
     @ManyToOne
-
     @JoinColumn(name = "post_id")//fk
     private Post post;
 
@@ -68,6 +67,7 @@ public class Card extends Timestamped {
         this.background = requestDto.getBackground();
         this.developer = requestDto.getDeveloper();
         this.deadline = requestDto.getDeadline();
+        return this;
     }
 
     public void setPost(Post post) { //연관 관계 맵핑
