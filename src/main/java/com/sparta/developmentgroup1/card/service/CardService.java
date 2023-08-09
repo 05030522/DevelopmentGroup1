@@ -1,5 +1,6 @@
 package com.sparta.developmentgroup1.card.service;
 
+import com.sparta.developmentgroup1.cardComment.dto.CardCommentResponseDto;
 import com.sparta.developmentgroup1.card.dto.CardIndexInfo;
 import com.sparta.developmentgroup1.card.dto.CardIndexUpdateRequestDto;
 import com.sparta.developmentgroup1.card.dto.CardRequestDto;
@@ -9,22 +10,28 @@ import com.sparta.developmentgroup1.card.entity.CardIndexInfo;
 import com.sparta.developmentgroup1.card.repository.CardRepository;
 import com.sparta.developmentgroup1.post.entity.Post;
 import com.sparta.developmentgroup1.post.service.PostService;
+import com.sparta.developmentgroup1.post.repository.PostRepository
+
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Columns;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.concurrent.RejectedExecutionException;
 
 @Service
 @RequiredArgsConstructor
 public class CardService {
+
+    private final PostRepository postRepository;
     private final PostService postService;
-    private final CardRepository cardRepository;
 
     //카드 생성
     public CardResponseDto createCard(CardRequestDto requestDto, User user) {
         //칼럼 있는지 확인
-        Post post = postService.findPost(requestDto.getColumnId());
+
+        Post post = postRepository.findPost(requestDto.getColumnId());
+        int lastindex = post.getCardList.size();
+
+        Post post = postServ
         //새로운 카드 만들기
         Card card = new Card(requestDto, post);
       
@@ -51,8 +58,7 @@ public class CardService {
         Card card = findCard(cardId);
         cardRepository.delete(card);
     }
-    //카드 이동(칼럼 내에서) //컨트롤러 작성해야함
-    @Transactional
+    //카드 이동(칼럼 내에서)
     private void updateCardIndex(CardIndexUpdateRequestDto requestDto){
         for (CardIndexInfo cardIndexInfo : requestDto.getInfoList()) {
             Card card = findCard(cardIndexInfo.getCardId());
@@ -63,5 +69,13 @@ public class CardService {
         return cardRepository.findById(cardId).orElseThrow(() ->
                 new IllegalArgumentException("선택한 카드는 존재하지 않습니다.")
         );
+    }
+    private Columns findColumn(Long columnId) {
+        return columnRepository.findById(columnId).orElseThrow(() ->
+                new IllegalArgumentException("존재하지 않는 컬럼입니다."));
+    }
+
+    public CardCommentResponseDto createComment(Long cardId) {
+
     }
 }
