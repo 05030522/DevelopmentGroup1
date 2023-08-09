@@ -1,5 +1,6 @@
 package com.sparta.developmentgroup1.card.entity;
 
+
 import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.cardComment.entity.CardComment;
 import com.sparta.developmentgroup1.common.entity.Timestamped;
@@ -7,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.sparta.developmentgroup1.post.entity.Post;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -46,7 +48,8 @@ public class Card extends Timestamped {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "column_id")//fk
+
+    @JoinColumn(name = "post_id")//fk
     private Post post;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
@@ -65,8 +68,10 @@ public class Card extends Timestamped {
         this.background = requestDto.getBackground();
         this.developer = requestDto.getDeveloper();
         this.deadline = requestDto.getDeadline();
+    }
 
-        return this;
+    public void setPost(Post post) { //연관 관계 맵핑
+        this.post = post;
     }
 }
 
