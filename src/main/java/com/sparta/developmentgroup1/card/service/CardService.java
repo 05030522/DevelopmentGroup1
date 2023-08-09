@@ -28,7 +28,7 @@ public class CardService {
     public CardResponseDto createCard(CardRequestDto requestDto, User user) {
         //칼럼 있는지 확인
 
-        Post post = postRepository.findPost(requestDto.getColumnId());
+        Post post = postRepository.findPost(requestDto.getPostId());
         int lastindex = post.getCardList.size();
 
         //새로운 카드 만들기
