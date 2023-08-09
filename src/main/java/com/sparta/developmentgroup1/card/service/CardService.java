@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CardService {
 
     private final PostRepository postRepository;
-    private final PostService postService;
+    private final CardRepository cardRepository;
 
     //카드 생성
     public CardResponseDto createCard(CardRequestDto requestDto, User user) {
