@@ -62,7 +62,7 @@ public class Card  {
         this.background = requestDto.getBackground();
         this.developer = requestDto.getDeveloper();
         this.deadline = requestDto.getDeadline();
-
+    }
 
     public void setPost(Post post) { //연관 관계 맵핑
         this.post = post;
