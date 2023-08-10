@@ -49,4 +49,9 @@ public class UserService {
         User user = new User(username, password, email, role);
         userRepository.save(user);
     }
+
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+    }
 }

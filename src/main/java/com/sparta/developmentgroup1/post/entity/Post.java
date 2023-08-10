@@ -14,10 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "posts")
 public class Post {
+    // @Column 사용에 문제가 생겨서 Entity 붙임
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long postId;
 
     @Column(nullable = false)
     private String name;
@@ -26,15 +27,17 @@ public class Post {
     @JoinColumn(name = "board_id", nullable = false)
     private Board board;
 
-    @OneToMany(mappedBy = "post", orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Card> cardList = new ArrayList<>();
 
     public Post(String name, Board board) {
         this.name = name;
         this.board = board;
+
     }
 
     public void update(String name) {
         this.name = name;
     }
+
 }

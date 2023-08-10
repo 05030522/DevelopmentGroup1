@@ -1,17 +1,21 @@
 package com.sparta.developmentgroup1.card.service;
 
+import com.sparta.developmentgroup1.card.dto.CardPositionInfo;
 import com.sparta.developmentgroup1.card.dto.CardPositionUpdateRequestDto;
 import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.card.dto.CardResponseDto;
 import com.sparta.developmentgroup1.card.entity.Card;
-import com.sparta.developmentgroup1.card.entity.CardPositionInfo;
 import com.sparta.developmentgroup1.card.repository.CardRepository;
-import com.sparta.developmentgroup1.cardUser.entity.CardUser;
+import com.sparta.developmentgroup1.cardComment.dto.CardCommentResponseDto;
+import com.sparta.developmentgroup1.cardComment.entity.CardComment;
 import com.sparta.developmentgroup1.post.entity.Post;
 import com.sparta.developmentgroup1.post.repository.PostRepository;
+import com.sparta.developmentgroup1.user.entity.User;
+import com.sparta.developmentgroup1.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +23,57 @@ public class CardService {
 
     private final PostRepository postRepository;
     private final CardRepository cardRepository;
+
+    // 카드 생성
+    @Transactional
+    public CardResponseDto createCard(CardRequestDto requestDto, User user) {
+        // 조회한 포스트 정보 가져오기
+        Post post = findPost(requestDto.getPostId());
+
+        // 새로운 카드 생성
+        int lastPosition = post.getCardList().size();
+        Card card = new Card(requestDto, post, lastPosition + 1);
+        card.setUser(user);
+        card.setPost(post);
+        var savedCard = cardRepository.save(card);
+        return new CardResponseDto(savedCard);
+    }
+
+    // 카드 수정
+    @Transactional
+    public CardResponseDto updateCard(Long cardId, CardRequestDto requestDto) {
+        Card card = findCard(cardId);
+        card.update(requestDto);
+        return new CardResponseDto(card.update(requestDto));
+    }
+
+    // 카드 삭제
+    @Transactional
+    public void deleteCard(Long cardId) {
+        Card card = findCard(cardId);
+        cardRepository.delete(card);
+    }
+
+    // 카드 이동(칼럼 내에서)
+    private void updateCardPosition(CardPositionUpdateRequestDto requestDto) {
+        for (CardPositionInfo cardPositionInfo : requestDto.getInfoList()) {
+            Card card = findCard(cardPositionInfo.getCardId());
+            card.setPosition(cardPositionInfo.getPosition());
+        }
+    }
+
+    private Card findCard(Long cardId) {
+        return cardRepository.findById(cardId).orElseThrow(() ->
+                new IllegalArgumentException("선택한 카드는 존재하지 않습니다.")
+        );
+    }
+
+
+    private Post findPost(Long postId) {
+        return postRepository.findById(postId).orElseThrow(() ->
+                new IllegalArgumentException("존재하지 않는 컬럼입니다."));
+    }
+
 
     //카드 생성
     public CardResponseDto createCard(CardRequestDto requestDto) {
@@ -32,37 +87,45 @@ public class CardService {
         return new CardResponseDto(savedCard); //CardResponseDto 생성자를 통해 필드 추가
     }
 
-    //카드 수정
+
     @Transactional
-    public CardResponseDto updateCard(Long cardId, CardRequestDto requestDto) {
-        //DB에 존재하는지 확인
+    public void updateComment(Long cardId, Long commentId, CardCommentResponseDto requestDto) {
         Card card = findCard(cardId);
-        card.update(requestDto);
-        // 내용 수정
-        return new CardResponseDto(card.update(requestDto));
+        CardComment comment = findComment(card, commentId); // 댓글 찾기
+
+        comment.setContent(requestDto.getContent());
+
+        cardRepository.save(card); // 변경된 카드 저장
     }
 
-    //카드 삭제
+    private CardComment findComment(Card card, Long commentId) {
+        for (CardComment comment : card.getComments()) {
+            if (comment.getId().equals(commentId)) {
+                return comment;
+            }
+        }
+        throw new IllegalArgumentException("선택한 댓글은 존재하지 않습니다.");
+    }
+
     @Transactional
-    public void deleteCard(Long cardId) {
-        //  DB에 존재하는지 확인
+    public CardCommentResponseDto createComment(Long cardId, CardCommentResponseDto requestDto) {
         Card card = findCard(cardId);
-        cardRepository.delete(card);
-    }
-    //카드 이동(칼럼 내에서)
-    private void updateCardPosition(CardPositionUpdateRequestDto requestDto){
-        for (CardPositionInfo cardPositionInfo : requestDto.getInfoList()) {
-            Card card = findCard(cardPositionInfo.getCardId());
-            card.setPosition(cardPositionInfo.getPosition());
-        } //다른 칼럼으로도 이동 가능하게 구현해야함. 순서는 아무데나
-    }
-    private Card findCard(Long cardId) {
-        return cardRepository.findById(cardId).orElseThrow(() ->
-                new IllegalArgumentException("선택한 카드는 존재하지 않습니다.")
+
+        CardComment comment = new CardComment();
+        comment.setContent(requestDto.getContent());
+        comment.setAuthor(requestDto.getAuthor());
+
+        card.getComments().add(comment);
+        cardRepository.save(card);
+
+        CardCommentResponseDto createdCommentDto = new CardCommentResponseDto(
+                comment.getId(),
+                comment.getContent(),
+                comment.getCreatedAt(),
+                comment.getModifiedAt(),
+                comment.getAuthor()
         );
-    }
 
-//    public CardCommentResponseDto createComment(Long cardId) {
-//return null;
-//    }
+        return createdCommentDto;
+    }
 }
