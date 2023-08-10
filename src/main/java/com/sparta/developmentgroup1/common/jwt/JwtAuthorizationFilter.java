@@ -1,9 +1,9 @@
-package com.sparta.developmentgroup1.user.jwt;
+package com.sparta.developmentgroup1.common.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.sparta.developmentgroup1.user.dto.ApiResponseDto;
-import com.sparta.developmentgroup1.user.security.UserDetailsServiceImpl;
+import com.sparta.developmentgroup1.common.dto.ApiResponseDto;
+import com.sparta.developmentgroup1.common.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -35,7 +35,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
         // Header에서 jwt 토큰 받아오기
-        String tokenValue = jwtUtil.getTokenFromRequest(req);
+        String tokenValue = jwtUtil.getJwtFromHeader(req);
 
         if (StringUtils.hasText(tokenValue)) {
 

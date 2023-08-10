@@ -1,4 +1,4 @@
-package com.sparta.developmentgroup1.user.config;
+package com.sparta.developmentgroup1.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
