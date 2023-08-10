@@ -1,8 +1,7 @@
-package com.sparta.developmentgroup1.user.security;
+package com.sparta.developmentgroup1.common.security;
 
 import com.sparta.developmentgroup1.user.entity.User;
 import com.sparta.developmentgroup1.user.repository.UserRepository;
-import com.sparta.developmentgroup1.user.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

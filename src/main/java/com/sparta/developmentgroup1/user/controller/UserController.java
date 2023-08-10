@@ -4,7 +4,7 @@ package com.sparta.developmentgroup1.user.controller;
 import com.sparta.developmentgroup1.user.dto.SignupRequestDto;
 import com.sparta.developmentgroup1.user.dto.UserInfoDto;
 import com.sparta.developmentgroup1.user.entity.UserRoleEnum;
-import com.sparta.developmentgroup1.user.security.UserDetailsImpl;
+import com.sparta.developmentgroup1.common.security.UserDetailsImpl;
 import com.sparta.developmentgroup1.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

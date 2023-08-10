@@ -1,9 +1,9 @@
-package com.sparta.developmentgroup1.user.jwt;
+package com.sparta.developmentgroup1.common.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.sparta.developmentgroup1.user.dto.ApiResponseDto;
-import com.sparta.developmentgroup1.user.security.UserDetailsServiceImpl;
+import com.sparta.developmentgroup1.common.dto.ApiResponseDto;
+import com.sparta.developmentgroup1.common.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

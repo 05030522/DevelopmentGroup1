@@ -1,4 +1,4 @@
-package com.sparta.developmentgroup1.user.jwt;
+package com.sparta.developmentgroup1.common.jwt;
 
 import com.sparta.developmentgroup1.user.entity.UserRoleEnum;
 import io.jsonwebtoken.*;

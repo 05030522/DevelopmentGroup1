@@ -1,9 +1,9 @@
-package com.sparta.developmentgroup1.user.config;
+package com.sparta.developmentgroup1.common.config;
 
-import com.sparta.developmentgroup1.user.jwt.JwtAuthenticationFilter;
-import com.sparta.developmentgroup1.user.jwt.JwtAuthorizationFilter;
-import com.sparta.developmentgroup1.user.jwt.JwtUtil;
-import com.sparta.developmentgroup1.user.security.UserDetailsServiceImpl;
+import com.sparta.developmentgroup1.common.jwt.JwtAuthenticationFilter;
+import com.sparta.developmentgroup1.common.jwt.JwtAuthorizationFilter;
+import com.sparta.developmentgroup1.common.jwt.JwtUtil;
+import com.sparta.developmentgroup1.common.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 
 @Configuration
@@ -45,9 +47,10 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
         // CSRF 설정
         http.csrf((csrf) -> csrf.disable());
+        MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
         // 기본 설정인 Session 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
         http.sessionManagement((sessionManagement) ->
@@ -56,9 +59,9 @@ public class WebSecurityConfig {
 
         http.authorizeHttpRequests((authorizeHttpRequests) ->
                 authorizeHttpRequests
-//                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
-                        .requestMatchers("/").permitAll() // 메인 페이지 요청 허가
-                        .requestMatchers("/api/user/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
+                        .requestMatchers(mvcMatcherBuilder.pattern("/")).permitAll() // 메인 페이지 요청 허가
+                        .requestMatchers(mvcMatcherBuilder.pattern("/api/user/**")).permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         );
 

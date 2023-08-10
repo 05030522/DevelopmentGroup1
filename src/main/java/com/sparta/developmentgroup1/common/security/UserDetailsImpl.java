@@ -1,4 +1,4 @@
-package com.sparta.developmentgroup1.user.security;
+package com.sparta.developmentgroup1.common.security;
 
 import com.sparta.developmentgroup1.user.entity.User;
 import com.sparta.developmentgroup1.user.entity.UserRoleEnum;
