@@ -1,6 +1,7 @@
 package com.sparta.developmentgroup1.cardComment.entity;
 
 import com.sparta.developmentgroup1.card.entity.Card;
+import com.sparta.developmentgroup1.cardComment.dto.CardCommentRequestDto;
 import com.sparta.developmentgroup1.common.entity.Timestamped;
 import com.sparta.developmentgroup1.user.entity.User;
 import jakarta.persistence.*;
@@ -30,9 +31,12 @@ public class CardComment extends Timestamped {
     @JoinColumn(name = "card_id")//fk
     private Card card;
 
-    public CardComment(String content, String author) {
-        this.content = content;
-        this.author = author;
+
+    public CardComment(CardCommentRequestDto requestDto, Card card) {
+        super();
+        this.content = requestDto.getContent();
+        this.card = card;
+
     }
 
     public String getContent() {

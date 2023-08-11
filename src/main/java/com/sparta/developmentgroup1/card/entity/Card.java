@@ -41,23 +41,12 @@ public class Card extends Timestamped {
     private int positionIndex;
 
     @ManyToOne
-    @JoinColumn(name = "user_id") // fk
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name = "post_id") // fk
     private Post post;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
     private List<CardComment> comments = new ArrayList<>();
 
-    public Card(CardRequestDto requestDto) {
-        this.title = requestDto.getTitle();
-        this.description = requestDto.getDescription();
-        this.background = requestDto.getBackground();
-        this.deadline = requestDto.getDeadline();
-        this.positionIndex = 0;
-    }
 
     public Card(CardRequestDto requestDto, Post post, int positionIndex) {
         this.title = requestDto.getTitle();
