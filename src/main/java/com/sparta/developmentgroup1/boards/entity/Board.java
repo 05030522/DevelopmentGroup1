@@ -19,6 +19,9 @@ public class Board  extends Timestamped { //보드 엔티티
     @ManyToOne
     private User creator; //보드 만든 사람 예시
 
+    @ManyToMany
+    private Set<User> collaborators; //보드 공유하는 사람 예시
+
     public Long getId() {
         return id;
     }
@@ -66,8 +69,5 @@ public class Board  extends Timestamped { //보드 엔티티
     public void setCollaborators(Set<User> collaborators) {
         this.collaborators = collaborators;
     }
-
-    @ManyToMany
-    private Set<User> collaborators; //보드 공유하는 사람 예시
 
 }
