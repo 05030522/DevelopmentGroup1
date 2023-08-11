@@ -1,9 +1,11 @@
 package com.sparta.developmentgroup1.user.service;
 
 import com.sparta.developmentgroup1.user.dto.SignupRequestDto;
+import com.sparta.developmentgroup1.user.dto.UserInfoDto;
 import com.sparta.developmentgroup1.user.entity.User;
 import com.sparta.developmentgroup1.user.entity.UserRoleEnum;
 import com.sparta.developmentgroup1.user.repository.UserRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class UserService {
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
-    public void signup(SignupRequestDto requestDto) {
+    public void signup(@Valid SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
 
@@ -47,6 +49,20 @@ public class UserService {
 
         // 사용자 등록
         User user = new User(username, password, email, role);
+        userRepository.save(user);
+    }
+
+    public UserInfoDto getUserInfo(User user) {
+        User newuser = userRepository.findById(user.getId()).orElseThrow(() -> new IllegalArgumentException("회원정보가 없습니다."));
+        String nickname = newuser.getNickname();
+        return new UserInfoDto(nickname);
+    }
+
+    public void updateNickname(String username, String newNickname) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        user.setNickname(newNickname);
         userRepository.save(user);
     }
 
