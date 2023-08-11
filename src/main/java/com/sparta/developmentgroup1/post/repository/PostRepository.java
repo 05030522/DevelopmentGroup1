@@ -8,8 +8,5 @@ import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findByBoardIdAndPostId(Long boardId, Long postId);
-
-//    Optional<Post> findByBoardIdAndPostId(Long boardId, Long postId);
-
     List<Post> findAllByBoardIdOrderByPositionAsc(Long boardId);
 }
