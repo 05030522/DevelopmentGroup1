@@ -1,33 +1,53 @@
 package com.sparta.developmentgroup1.post.controller;
 
+import com.sparta.developmentgroup1.common.dto.ApiResponseDto;
+import com.sparta.developmentgroup1.common.security.UserDetailsImpl;
 import com.sparta.developmentgroup1.post.dto.PostRequestDto;
-import com.sparta.developmentgroup1.post.dto.PostUpdateRequestDto;
+import com.sparta.developmentgroup1.post.dto.PostResponseDto;
 import com.sparta.developmentgroup1.post.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/posts")
-    public ResponseEntity<String> createPost(@RequestBody PostRequestDto requestDto) {
-        postService.createPost(requestDto);
-        return ResponseEntity.ok("컬럼 생성 완료");
+    @GetMapping("/{boardId}/posts")
+    public ResponseEntity<List<PostResponseDto>> getPost(@PathVariable Long boardId) {
+        List<PostResponseDto> postList = postService.getPost(boardId);
+        return ResponseEntity.ok().body(postList);
     }
 
-    @PutMapping("/posts/{id}")
-    public ResponseEntity<String> updatePost(@RequestBody PostUpdateRequestDto requestDto, @PathVariable Long id) {
-        postService.updatePost(requestDto, id);
-        return ResponseEntity.ok("컬럼명 수정 완료");
+    @PostMapping("/{boardId}/posts")
+    public ResponseEntity<ApiResponseDto> createPost(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                       @PathVariable Long boardId,
+                                                       @RequestBody PostRequestDto requestDto) {
+        postService.createPost(userDetails, boardId, requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseDto(HttpStatus.CREATED.value(), "포스트 생성 완료"));
     }
 
-    @DeleteMapping("/posts/{id}")
-    public ResponseEntity<String> deletePost(@PathVariable Long id) {
-        postService.deletePost(id);
-        return ResponseEntity.ok("컬럼 삭제 완료");
+    @PatchMapping("/{boardId}/posts/{postId}")
+    public ResponseEntity<ApiResponseDto> updateName(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                       @RequestBody PostRequestDto requestDto,
+                                                       @PathVariable Long boardId,
+                                                       @PathVariable Long postId) {
+        postService.updateName(userDetails, requestDto, boardId, postId);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDto(HttpStatus.OK.value(), "포스트 수정 완료"));
+    }
+
+    @DeleteMapping("/{boardId}/posts/{postId}")
+    public ResponseEntity<ApiResponseDto> deletePost(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                       @PathVariable Long boardId,
+                                                       @PathVariable Long postId) {
+        postService.deletePost(userDetails, boardId, postId);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDto(HttpStatus.OK.value(), "포스트 삭제 완료"));
     }
 }

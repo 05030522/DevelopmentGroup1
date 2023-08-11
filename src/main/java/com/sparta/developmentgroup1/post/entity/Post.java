@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "posts")
 public class Post {
-    // @Column 사용에 문제가 생겨서 Entity 붙임
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +22,9 @@ public class Post {
     @Column(nullable = false)
     private String name;
 
+    @Column
+    private int position;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", nullable = false)
     private Board board;
@@ -30,7 +32,11 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Card> cardList = new ArrayList<>();
 
-    public Post(String name, Board board) {
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public Post(String name, int position , Board board) {
         this.name = name;
         this.board = board;
 
