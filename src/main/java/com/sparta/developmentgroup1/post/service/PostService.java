@@ -42,7 +42,7 @@ public class PostService {
 
     @Transactional
     public void updateName(UserDetailsImpl userDetails, PostRequestDto requestDto, Long boardId, Long postId) {
-        Post post = postRepository.findByBoardIdAndId(boardId, postId).orElseThrow(
+        Post post = postRepository.findByBoardIdAndPostId(boardId, postId).orElseThrow(
                 () -> new IllegalArgumentException("요청한 포스트가 존재하지 않습니다.")
         );
 
@@ -53,7 +53,7 @@ public class PostService {
 
     @Transactional
     public void deletePost(UserDetailsImpl userDetails, Long boardId, Long postId) {
-        Post deletePost = postRepository.findByBoardIdAndId(boardId, postId).orElseThrow(
+        Post deletePost = postRepository.findByBoardIdAndPostId(boardId, postId).orElseThrow(
                 () -> new IllegalArgumentException("요청한 포스트가 존재하지 않습니다.")
         );
 
@@ -72,7 +72,7 @@ public class PostService {
 
     @Transactional
     public void movePost(UserDetailsImpl userDetails, Long boardId, Long postId, int newPosition) {
-        Post post = postRepository.findByBoardIdAndId(boardId, postId).orElseThrow(
+        Post post = postRepository.findByBoardIdAndPostId(boardId, postId).orElseThrow(
                 () -> new IllegalArgumentException("요청한 포스트가 존재하지 않습니다.")
         );
 
