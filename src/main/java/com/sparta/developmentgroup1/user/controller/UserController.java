@@ -1,67 +1,51 @@
 package com.sparta.developmentgroup1.user.controller;
 
-
+import com.sparta.developmentgroup1.common.dto.ApiResponseDto;
+import com.sparta.developmentgroup1.common.jwt.JwtUtil;
+import com.sparta.developmentgroup1.common.security.UserDetailsImpl;
+import com.sparta.developmentgroup1.user.dto.LoginRequestDto;
 import com.sparta.developmentgroup1.user.dto.SignupRequestDto;
 import com.sparta.developmentgroup1.user.dto.UserInfoDto;
-import com.sparta.developmentgroup1.user.entity.UserRoleEnum;
-import com.sparta.developmentgroup1.common.security.UserDetailsImpl;
 import com.sparta.developmentgroup1.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@Slf4j
-@Controller
-@RequiredArgsConstructor
+@RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
+    private final JwtUtil jwtUtil;
 
-    @GetMapping("/user/login-page")
-    public String loginPage() {
-        return "login";
-    }
-
-    @GetMapping("/user/signup")
-    public String signupPage() {
-        return "signup";
-    }
-
-    @PostMapping("/user/signup")
-    public String signup(@Valid SignupRequestDto requestDto, BindingResult bindingResult) {
-        // Validation 예외처리
-        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-        if(fieldErrors.size() > 0) {
-            for (FieldError fieldError : bindingResult.getFieldErrors()) {
-                log.error(fieldError.getField() + " 필드 : " + fieldError.getDefaultMessage());
-            }
-            return "redirect:/api/user/signup";
-        }
-
+    @PostMapping("/signup")
+    public ResponseEntity<ApiResponseDto> signup(@Valid @RequestBody SignupRequestDto requestDto) throws IllegalAccessException {
         userService.signup(requestDto);
-
-        return "redirect:/api/user/login-page";
+        return ResponseEntity.ok().body(new ApiResponseDto(HttpStatus.OK.value(), "회원 가입 성공"));
     }
 
-    // 회원 관련 정보 받기
-    @GetMapping("/user-info")
-    @ResponseBody
-    public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        String username = userDetails.getUser().getUsername();
-        UserRoleEnum role = userDetails.getUser().getRole();
-        boolean isAdmin = (role == UserRoleEnum.ADMIN);
+    //로그인
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponseDto> login(@RequestBody LoginRequestDto requestDto) {
+        return null;
+    }
 
-        return new UserInfoDto(username, isAdmin);
+    @GetMapping("/user-info")
+    public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        UserInfoDto userInfoDto = userService.getUserInfo(userDetails.getUser());
+        return userInfoDto;
+    }
+
+    @PutMapping("/{userId}/nickname")
+    public ResponseEntity<ApiResponseDto> updateNickname(@PathVariable String userId, @RequestBody String newNickname) {
+        try {
+            userService.updateNickname(userId, newNickname);
+            return ResponseEntity.ok().body(new ApiResponseDto(HttpStatus.OK.value(), "닉네임 업데이트 성공"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "사용자를 찾을 수 없습니다."));
+        }
     }
 }
