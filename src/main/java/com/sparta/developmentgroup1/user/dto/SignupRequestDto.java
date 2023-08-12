@@ -24,6 +24,9 @@ public class SignupRequestDto {
     @Email
     private String email;
 
+    @NotBlank(message = "Nickname is required.")
+    private String nickname;
+
     private boolean admin = false;
     private String adminToken = "";
 }
