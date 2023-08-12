@@ -1,7 +1,6 @@
 package com.sparta.developmentgroup1.common.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.sparta.developmentgroup1.common.dto.ApiResponseDto;
 import com.sparta.developmentgroup1.common.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
@@ -74,17 +73,17 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     }
 
     // 인증 처리
-    public void setAuthentication(String email) {
+    public void setAuthentication(String username) {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
-        Authentication authentication = createAuthentication(email);
+        Authentication authentication = createAuthentication(username);
         context.setAuthentication(authentication);
 
         SecurityContextHolder.setContext(context);
     }
 
     // 인증 객체 생성
-    private Authentication createAuthentication(String email) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+    private Authentication createAuthentication(String username) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 }

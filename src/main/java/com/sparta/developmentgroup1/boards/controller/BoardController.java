@@ -6,11 +6,13 @@ import com.sparta.developmentgroup1.boards.dto.BoardResponseDto;
 import com.sparta.developmentgroup1.boards.dto.BoardUpdateDto;
 import com.sparta.developmentgroup1.boards.entity.Board;
 import com.sparta.developmentgroup1.boards.service.BoardService;
+import com.sparta.developmentgroup1.common.security.UserDetailsImpl;
 import com.sparta.developmentgroup1.user.entity.User;
 import com.sparta.developmentgroup1.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,8 +25,8 @@ public class BoardController {
     private UserService userService; //유저 서비스
 
     @PostMapping("/create")
-    public ResponseEntity<BoardResponseDto> createBoard(@RequestBody BoardCreateDto requestDto) { //보드 생성
-        User creator = userService.findUserByUsername("exampleUsername"); // 사용자 정보 가져오기
+    public ResponseEntity<BoardResponseDto> createBoard(@RequestBody BoardCreateDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) { //보드 생성
+        User creator = userService.findUserByUsername(userDetails.getUser().getUsername()); // 사용자 정보 가져오기
         BoardResponseDto result = boardService.createBoard(requestDto, creator);
         return ResponseEntity.status(HttpStatus.CREATED).body(result); //보드 생성 결과 반환
     }

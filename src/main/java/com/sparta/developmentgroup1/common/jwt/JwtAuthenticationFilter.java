@@ -2,9 +2,9 @@ package com.sparta.developmentgroup1.common.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.developmentgroup1.common.dto.ApiResponseDto;
+import com.sparta.developmentgroup1.common.security.UserDetailsImpl;
 import com.sparta.developmentgroup1.user.dto.LoginRequestDto;
 import com.sparta.developmentgroup1.user.entity.UserRoleEnum;
-import com.sparta.developmentgroup1.common.security.UserDetailsImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,10 +49,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         log.info("로그인 성공 및 JWT 생성");
-        String email = ((UserDetailsImpl) authResult.getPrincipal()).getEmail();
+        String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
         UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
 
-        String token = jwtUtil.createToken(email, role);
+        String token = jwtUtil.createToken(username, role);
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
 
         response.setStatus(200);
