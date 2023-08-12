@@ -20,13 +20,13 @@ public class PostController {
 
     private final PostService postService;
 
-    @GetMapping("/{boardId}/posts")
+    @GetMapping("/{boardId}/posts") //게시글 조회
     public ResponseEntity<List<PostResponseDto>> getPost(@PathVariable Long boardId) {
         List<PostResponseDto> postList = postService.getPost(boardId);
         return ResponseEntity.ok().body(postList);
     }
 
-    @PostMapping("/{boardId}/posts")
+    @PostMapping("/{boardId}/posts") //게시글 생성
     public ResponseEntity<ApiResponseDto> createPost(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                        @PathVariable Long boardId,
                                                        @RequestBody PostRequestDto requestDto) {
@@ -34,7 +34,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseDto(HttpStatus.CREATED.value(), "포스트 생성 완료"));
     }
 
-    @PatchMapping("/{boardId}/posts/{postId}")
+    @PatchMapping("/{boardId}/posts/{postId}") //게시글 수정
     public ResponseEntity<ApiResponseDto> updateName(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                        @RequestBody PostRequestDto requestDto,
                                                        @PathVariable Long boardId,
@@ -43,7 +43,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDto(HttpStatus.OK.value(), "포스트 수정 완료"));
     }
 
-    @DeleteMapping("/{boardId}/posts/{postId}")
+    @DeleteMapping("/{boardId}/posts/{postId}") //게시글 삭제
     public ResponseEntity<ApiResponseDto> deletePost(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                        @PathVariable Long boardId,
                                                        @PathVariable Long postId) {
