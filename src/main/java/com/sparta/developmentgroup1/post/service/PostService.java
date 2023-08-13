@@ -23,11 +23,13 @@ public class PostService {
     private final BoardRepository boardRepository;
     // 협업 권한 설정을 위한 BoardUserRepository 추가 예정
 
+    @Transactional(readOnly = true)
     public List<PostResponseDto> getPost(Long boardId) {
         return postRepository.findAllByBoardIdOrderByPositionAsc(boardId).stream().map(PostResponseDto::new)
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void createPost(UserDetailsImpl userDetails, Long boardId, PostRequestDto requestDto) {
         Board board = boardRepository.findById(boardId).orElseThrow(
                 () -> new IllegalArgumentException("요청한 보드가 존재하지 않습니다.")
@@ -60,7 +62,7 @@ public class PostService {
         List<Post> posts = postRepository.findAllByBoardIdOrderByPositionAsc(boardId);
         for (Post post : posts) {
             if (post.getPosition() > deletePost.getPosition()) {
-                post.setPosition(post.getPosition() - 1);
+                post.movePosition(post.getPosition() - 1);
             }
         }
 
@@ -89,18 +91,18 @@ public class PostService {
             if (currentPosition < newPosition) {
                 for (Post p : posts) {
                     if (p.getPosition() > currentPosition && p.getPosition() <= newPosition) {
-                        p.setPosition(p.getPosition() - 1);
+                        p.movePosition(p.getPosition() - 1);
                     }
                 }
             } else {
                 for (Post p : posts) {
                     if (p.getPosition() >= newPosition && p.getPosition() < currentPosition) {
-                        p.setPosition(p.getPosition() + 1);
+                        p.movePosition(p.getPosition() + 1);
                     }
                 }
             }
             // 이동된 포스트의 새 위치 설정
-            post.setPosition(newPosition);
+            post.movePosition(newPosition);
         }
         return postRepository.findAllByBoardIdOrderByPositionAsc(boardId).stream().map(PostResponseDto::new)
                 .collect(Collectors.toList());

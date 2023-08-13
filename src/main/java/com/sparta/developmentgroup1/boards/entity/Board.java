@@ -46,64 +46,11 @@ public class Board  extends Timestamped { //보드 엔티티
     @ManyToMany
     private Set<User> collaborators; //보드 공유하는 사람 예시
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    public void setBackgroundColor(String backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
+    public Board(BoardRequestDto requestDto, User creator) {
+        this.name = requestDto.getName();
+        this.backgroundColor = requestDto.getBackgroundColor();
+        this.description = requestDto.getDescription();
         this.creator = creator;
-    }
-
-    public Set<User> getCollaborators() {
-        return collaborators;
-    }
-
-    public void setCollaborators(Set<User> collaborators) {
-        this.collaborators = collaborators;
-    }
-
-    public void updateName(BoardRequestDto boardRequestDto) {
-        this.name = boardRequestDto.getName();
-    }
-
-    public void updateBackgroundColor(BoardRequestDto boardRequestDto) {
-        this.backgroundColor = boardRequestDto.getBackgroundColor();
-    }
-
-    public void updateDescription(BoardRequestDto boardRequestDto) {
-        this.description = boardRequestDto.getDescription();
     }
 
 }

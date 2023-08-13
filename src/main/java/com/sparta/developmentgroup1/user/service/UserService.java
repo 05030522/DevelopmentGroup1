@@ -5,7 +5,6 @@ import com.sparta.developmentgroup1.user.dto.UserInfoDto;
 import com.sparta.developmentgroup1.user.entity.User;
 import com.sparta.developmentgroup1.user.entity.UserRoleEnum;
 import com.sparta.developmentgroup1.user.repository.UserRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class UserService {
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
-    public void signup(@Valid SignupRequestDto requestDto) {
+    public void signup(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
         String nickname = requestDto.getNickname();
@@ -63,12 +62,7 @@ public class UserService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
-        user.setNickname(newNickname);
+        user.updateNickname(newNickname);
         userRepository.save(user);
-    }
-
-    public User findUserByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
     }
 }

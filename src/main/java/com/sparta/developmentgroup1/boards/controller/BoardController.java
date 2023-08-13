@@ -1,49 +1,47 @@
 package com.sparta.developmentgroup1.boards.controller;
 
-import com.sparta.developmentgroup1.boards.dto.BoardCreateDto;
 import com.sparta.developmentgroup1.boards.dto.BoardInviteDto;
+import com.sparta.developmentgroup1.boards.dto.BoardRequestDto;
 import com.sparta.developmentgroup1.boards.dto.BoardResponseDto;
-import com.sparta.developmentgroup1.boards.dto.BoardUpdateDto;
-import com.sparta.developmentgroup1.boards.entity.Board;
 import com.sparta.developmentgroup1.boards.service.BoardService;
+import com.sparta.developmentgroup1.common.dto.ApiResponseDto;
 import com.sparta.developmentgroup1.common.security.UserDetailsImpl;
-import com.sparta.developmentgroup1.user.entity.User;
-import com.sparta.developmentgroup1.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/boards") //일단 미정이지만 대충 적어둠
+@RequestMapping("/api") //일단 미정이지만 대충 적어둠
+@RequiredArgsConstructor
 public class BoardController {
 
-    @Autowired
-    private BoardService boardService; //보드 서비스
-    @Autowired
-    private UserService userService; //유저 서비스
+    private final BoardService boardService; //보드 서비스
 
-    @PostMapping("/{id}")
-    public ResponseEntity<BoardResponseDto> createBoard(@RequestBody BoardCreateDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) { //보드 생성
-        User creator = userService.findUserByUsername(userDetails.getUser().getUsername()); // 사용자 정보 가져오기
-        BoardResponseDto result = boardService.createBoard(requestDto, creator);
+    @PostMapping("/boards")
+    public ResponseEntity<BoardResponseDto> createBoard(@RequestBody BoardRequestDto dto,
+                                                        @AuthenticationPrincipal UserDetailsImpl userDetails) { //보드 생성
+        BoardResponseDto result = boardService.createBoard(dto, userDetails.getUser());
         return ResponseEntity.status(HttpStatus.CREATED).body(result); //보드 생성 결과 반환
     }
 
-    @PutMapping("/{id}")
-    public Board updateBoard(@PathVariable Long id, @RequestBody BoardUpdateDto dto) { //보드 수정
-        return boardService.updateBoard(id, dto); //보드 수정 결과 반환
+    @PutMapping("/boards/{id}")
+    public ResponseEntity<BoardResponseDto> updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto dto) { //보드 수정
+        BoardResponseDto result = boardService.updateBoard(id, dto); //보드 수정 결과 반환
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteBoard(@PathVariable Long id) {
-        boardService.deleteBoard(id); //보드 삭제
+    @DeleteMapping("/boards/{id}")
+    public ResponseEntity<ApiResponseDto> deleteBoard(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        boardService.deleteBoard(id, userDetails.getUser()); //보드 삭제
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDto(HttpStatus.OK.value(), "보드 삭제 완료"));
     }
 
-    @PostMapping("/{id}/invitations")
-    public void inviteUsers(@PathVariable Long id, @RequestBody BoardInviteDto dto) {
-        dto.setBoardId(id);
-        boardService.inviteUsersToBoard(dto);
+    @PostMapping("/boards/{id}/invitations")
+    public ResponseEntity<ApiResponseDto> inviteUsers(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                            @PathVariable Long id, @RequestBody BoardInviteDto dto) {
+        boardService.inviteUsersToBoard(userDetails, id, dto);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDto(HttpStatus.OK.value(), "사용자 초대 완료"));
     }
 }
