@@ -1,12 +1,12 @@
 package com.sparta.developmentgroup1.boards.service;
 
+import com.sparta.developmentgroup1.boards.dto.BoardInviteDto;
 import com.sparta.developmentgroup1.boards.dto.BoardRequestDto;
 import com.sparta.developmentgroup1.boards.dto.BoardResponseDto;
 import com.sparta.developmentgroup1.boards.entity.Board;
+import com.sparta.developmentgroup1.boards.entity.BoardUser;
 import com.sparta.developmentgroup1.boards.repository.BoardRepository;
 import com.sparta.developmentgroup1.boards.repository.BoardUserRepository;
-import com.sparta.developmentgroup1.boards.dto.BoardInviteDto;
-import com.sparta.developmentgroup1.boards.entity.BoardUser;
 import com.sparta.developmentgroup1.common.security.UserDetailsImpl;
 import com.sparta.developmentgroup1.user.entity.User;
 import com.sparta.developmentgroup1.user.repository.UserRepository;
@@ -77,19 +77,8 @@ public class BoardService {
 
     @Transactional
     public void deletedUserFromBoard(Long boardId, Long userId) {
-        Board board = findBoard(boardId);
-
-        User collaborator = userRepository.findById(userId).orElseThrow(
-                () ->new IllegalArgumentException("유저를 찾을 수 없습니다. 다시 확인해 주세요."));
-
-/*        BoardUser boardUser = boardUserRepository.findByBoardAndCollaborator(board, collaborator).orElseThrow(
-                () ->new IllegalArgumentException("보드에 해당 유저가 없습니다. 다시 확인해 주세요."));*/
-
         BoardUser boardUser = boardUserRepository.findByBoardIdAndCollaboratorId(boardId, userId).orElseThrow(
                 () ->new IllegalArgumentException("보드에 해당 유저가 없습니다. 다시 확인해 주세요."));
-
-        board.getCollaborators().remove(collaborator);
-        boardRepository.save(board);
 
         boardUserRepository.delete(boardUser);
     }

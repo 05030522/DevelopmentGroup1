@@ -36,15 +36,13 @@ public class Post {
         this.name = name;
         this.position = position;
         this.board = board;
-
     }
 
     public void movePosition(int position) {
         this.position = position;
     }
 
-    public void update(String name) {
+    public void updateName(String name) {
         this.name = name;
     }
-
 }
