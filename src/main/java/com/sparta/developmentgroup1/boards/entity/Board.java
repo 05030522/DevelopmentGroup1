@@ -39,9 +39,9 @@ public class Board  extends Timestamped { //보드 엔티티
     @OneToMany(mappedBy = "board", orphanRemoval = true)
     private List<BoardUser> boardUsers = new ArrayList<>();
 
-    @Builder.Default
-    @OneToMany(mappedBy = "board", orphanRemoval = true)
-    private List<Area> areas = new ArrayList<>();
+    // @Builder.Default
+    // @OneToMany(mappedBy = "board", orphanRemoval = true)
+    // private List<Area> areas = new ArrayList<>();
 
     @ManyToMany
     private Set<User> collaborators; //보드 공유하는 사람 예시
