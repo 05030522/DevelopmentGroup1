@@ -13,7 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api") //일단 미정이지만 대충 적어둠
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class BoardController {
 
@@ -40,8 +40,15 @@ public class BoardController {
 
     @PostMapping("/boards/{id}/invitations")
     public ResponseEntity<ApiResponseDto> inviteUsers(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                            @PathVariable Long id, @RequestBody BoardInviteDto dto) {
+                                                      @PathVariable Long id, @RequestBody BoardInviteDto dto) {
         boardService.inviteUsersToBoard(userDetails, id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDto(HttpStatus.OK.value(), "사용자 초대 완료"));
+    }
+
+    @DeleteMapping("/boards/{boardId}/invitations/{userId}")
+    public ResponseEntity<ApiResponseDto> deletdUserFromBoard(@PathVariable Long boardId, @PathVariable Long userId) {
+        boardService.deletedUserFromBoard(boardId, userId);
+        ApiResponseDto response = new ApiResponseDto(HttpStatus.OK.value(), "사용자 삭제 완료");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

@@ -75,7 +75,24 @@ public class BoardService {
         boardUserRepository.save(boardUser); //보드 저장
     }
 
-    // 협업유저 삭제 구현 예정
+    @Transactional
+    public void deletedUserFromBoard(Long boardId, Long userId) {
+        Board board = findBoard(boardId);
+
+        User collaborator = userRepository.findById(userId).orElseThrow(
+                () ->new IllegalArgumentException("유저를 찾을 수 없습니다. 다시 확인해 주세요."));
+
+/*        BoardUser boardUser = boardUserRepository.findByBoardAndCollaborator(board, collaborator).orElseThrow(
+                () ->new IllegalArgumentException("보드에 해당 유저가 없습니다. 다시 확인해 주세요."));*/
+
+        BoardUser boardUser = boardUserRepository.findByBoardIdAndCollaboratorId(boardId, userId).orElseThrow(
+                () ->new IllegalArgumentException("보드에 해당 유저가 없습니다. 다시 확인해 주세요."));
+
+        board.getCollaborators().remove(collaborator);
+        boardRepository.save(board);
+
+        boardUserRepository.delete(boardUser);
+    }
 
     private Board findBoard(Long id) { //보드 찾기
         Board board = boardRepository.findById(id)
