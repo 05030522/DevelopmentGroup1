@@ -6,7 +6,6 @@ import com.sparta.developmentgroup1.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
