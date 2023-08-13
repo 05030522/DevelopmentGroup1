@@ -2,11 +2,11 @@ package com.sparta.developmentgroup1.user.entity;
 
 import com.sparta.developmentgroup1.boards.entity.Board;
 import com.sparta.developmentgroup1.boards.entity.BoardUser;
+import com.sparta.developmentgroup1.comment.entity.Comment;
 import com.sparta.developmentgroup1.cardUser.entity.CardUser;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.xml.stream.events.Comment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,15 +44,15 @@ public class User {
     private List<BoardUser> boardUsers = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "collaborator", orphanRemoval = true)
+    @OneToMany(mappedBy = "collaborator", orphanRemoval = true) // 작업자 필드명 수정 고려
     private List<CardUser> cardUsers = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "author", orphanRemoval = true)
+    @OneToMany(mappedBy = "creator", orphanRemoval = true)
     private List<Board> boards = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "author", orphanRemoval = true)
+    @OneToMany(mappedBy = "creator", orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     public User(String username, String password, String nickname, String email, UserRoleEnum role) {

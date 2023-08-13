@@ -1,10 +1,9 @@
 package com.sparta.developmentgroup1.card.entity;
 
 import com.sparta.developmentgroup1.card.dto.CardRequestDto;
-import com.sparta.developmentgroup1.cardComment.entity.CardComment;
+import com.sparta.developmentgroup1.comment.entity.Comment;
 import com.sparta.developmentgroup1.common.entity.Timestamped;
 import com.sparta.developmentgroup1.post.entity.Post;
-import com.sparta.developmentgroup1.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "card")
+@Table(name = "cards")
 @NoArgsConstructor
 public class Card extends Timestamped {
 
@@ -45,7 +44,7 @@ public class Card extends Timestamped {
     private Post post;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
-    private List<CardComment> comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
 
     public Card(CardRequestDto requestDto, Post post, int positionIndex) {
@@ -81,7 +80,7 @@ public class Card extends Timestamped {
         this.positionIndex = position;
     }
 
-    public void addComment(CardComment comment) {
+    public void addComment(Comment comment) {
         comments.add(comment);
         comment.setCard(this);
     }

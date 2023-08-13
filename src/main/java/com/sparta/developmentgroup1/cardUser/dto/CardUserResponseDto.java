@@ -12,6 +12,6 @@ public class CardUserResponseDto {
 
     public CardUserResponseDto(CardUser cardUser) {
         this.id = cardUser.getId();
-        this.username = cardUser.getUser().getUsername();
+//        this.username = cardUser.getUser().getUsername();
     }
 }

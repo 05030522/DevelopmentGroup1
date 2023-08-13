@@ -1,7 +1,6 @@
-package com.sparta.developmentgroup1.cardComment.dto;
+package com.sparta.developmentgroup1.comment.dto;
 
-import com.sparta.developmentgroup1.card.dto.CardResponseDto;
-import com.sparta.developmentgroup1.cardComment.entity.CardComment;
+import com.sparta.developmentgroup1.comment.entity.Comment;
 import com.sparta.developmentgroup1.common.dto.MsgResponseDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class CardCommentResponseDto extends MsgResponseDto {
+public class CommentResponseDto extends MsgResponseDto {
     private Long id;
     private String content;
     private LocalDateTime createdAt;
@@ -18,7 +17,7 @@ public class CardCommentResponseDto extends MsgResponseDto {
     private String author;
 
 
-    public CardCommentResponseDto(CardComment comment) {
+    public CommentResponseDto(Comment comment) {
         this.id = getId();
         this.content = getContent();
         this.createdAt = getCreatedAt();

@@ -1,11 +1,11 @@
-package com.sparta.developmentgroup1.cardComment.dto;
+package com.sparta.developmentgroup1.comment.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class CardCommentRequestDto {
+public class CommentRequestDto {
     private String content;
     private Long cardId;
 }
