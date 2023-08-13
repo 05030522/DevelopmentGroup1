@@ -23,7 +23,7 @@ public class CardController {
 
     @PostMapping("/cards") //카드 생성
     public ResponseEntity<CardResponseDto> createCard(@RequestBody CardRequestDto requestDto, Authentication authentication) {
-        // Get the currently logged-in user from the authentication object
+
         User user = (User) authentication.getPrincipal();
 
         CardResponseDto result = cardService.createCard(requestDto, user);
