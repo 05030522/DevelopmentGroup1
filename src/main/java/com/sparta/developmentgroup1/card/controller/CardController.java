@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CardController {
     private final CardService cardService;
-    private final UserService userService;
 
-    @PostMapping("/cards") // 카드 생성
+
+    @PostMapping("/cards") //카드 생성
     public ResponseEntity<CardResponseDto> createCard(@RequestBody CardRequestDto requestDto, Authentication authentication) {
-        // 인증 객체에서 현재 로그인한 사용자 가져오기
+        // Get the currently logged-in user from the authentication object
         User user = (User) authentication.getPrincipal();
 
-        CardResponseDto result = cardService.createCard(requestDto);
+        CardResponseDto result = cardService.createCard(requestDto, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
