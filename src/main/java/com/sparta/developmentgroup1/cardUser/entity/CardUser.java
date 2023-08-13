@@ -10,7 +10,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "card_user")
+@Table(name = "card_users")
 @NoArgsConstructor
 public class CardUser {
     @Id
@@ -19,14 +19,14 @@ public class CardUser {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User collaborator;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
     private Card card;
 
-    public CardUser(User user, Card card) {
-        this.user = user;
+    public CardUser(User collaborator, Card card) {
+        this.collaborator = collaborator;
         this.card = card;
     }
 

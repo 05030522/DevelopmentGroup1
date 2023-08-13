@@ -1,7 +1,7 @@
-package com.sparta.developmentgroup1.cardComment.entity;
+package com.sparta.developmentgroup1.comment.entity;
 
 import com.sparta.developmentgroup1.card.entity.Card;
-import com.sparta.developmentgroup1.cardComment.dto.CardCommentRequestDto;
+import com.sparta.developmentgroup1.comment.dto.CommentRequestDto;
 import com.sparta.developmentgroup1.common.entity.Timestamped;
 import com.sparta.developmentgroup1.user.entity.User;
 import jakarta.persistence.*;
@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "comment")
-public class CardComment extends Timestamped {
+@Table(name = "comments")
+public class Comment extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //pk
@@ -37,7 +37,7 @@ public class CardComment extends Timestamped {
     private Card card;
 
 
-    public CardComment(CardCommentRequestDto requestDto, Card card) {
+    public Comment(CommentRequestDto requestDto, Card card) {
         super();
         this.content = requestDto.getContent();
         this.card = card;
@@ -63,7 +63,7 @@ public class CardComment extends Timestamped {
         this.card = card;
     }
 
-    public void setAuthor(User creator) {
+    public void setCreator(User creator) {
         this.creator = creator;
     }
 }

@@ -32,14 +32,15 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Card> cardList = new ArrayList<>();
 
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
     public Post(String name, int position , Board board) {
         this.name = name;
+        this.position = position;
         this.board = board;
 
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public void update(String name) {

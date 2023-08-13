@@ -32,7 +32,7 @@ public class Board  extends Timestamped { //보드 엔티티
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", nullable = false)
+    @JoinColumn(name = "creator_id", nullable = false)
     private User creator; //보드 만든 사람 예시
 
     @Builder.Default
