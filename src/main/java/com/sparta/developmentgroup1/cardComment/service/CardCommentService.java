@@ -24,7 +24,7 @@ public class CardCommentService {
 
         comment.setCard(card); //조회한 카드 받고
         comment.setContent(comment.getContent());
-        comment.setAuthor(comment.getAuthor());
+        comment.setAuthor(comment.getCreator());
          var savedCardComment = cardCommentRepository.save(comment); //DB에 저장
         return new CardCommentResponseDto(savedCardComment); //CardCommentResponseDto 생성자를 통해 필드 추가
     }

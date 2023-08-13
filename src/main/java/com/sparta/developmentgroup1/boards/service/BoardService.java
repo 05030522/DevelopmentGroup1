@@ -56,7 +56,7 @@ public class BoardService {
 
     public void inviteUsersToBoard(BoardInviteDto dto) { //보드 초대
         Board board = boardRepository.findById(dto.getBoardId()) //보드 찾기
-                .orElseThrow(() -> new RuntimeException("Could not find board")); //보드가 없으면 에러
+                .orElseThrow(() -> new RuntimeException("보드를 찾을 수 없습니다.")); //보드가 없으면 에러
 
         Set<User> collaborators = new HashSet<>(); //초대할 사용자들
         for (String username : dto.getUsernamesToInvite()) { //초대할 사용자들을 반복문으로 돌면서

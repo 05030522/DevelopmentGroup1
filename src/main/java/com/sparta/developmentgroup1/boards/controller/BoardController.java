@@ -16,7 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/boards") //일단 미정이지만 대충 적어둠
+@RequestMapping("/api/boards") //일단 미정이지만 대충 적어둠
 public class BoardController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class BoardController {
     @Autowired
     private UserService userService; //유저 서비스
 
-    @PostMapping("/create")
+    @PostMapping("/{id}")
     public ResponseEntity<BoardResponseDto> createBoard(@RequestBody BoardCreateDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) { //보드 생성
         User creator = userService.findUserByUsername(userDetails.getUser().getUsername()); // 사용자 정보 가져오기
         BoardResponseDto result = boardService.createBoard(requestDto, creator);
@@ -41,9 +41,9 @@ public class BoardController {
         boardService.deleteBoard(id); //보드 삭제
     }
 
-    @PostMapping("/{id}/invite")
-    public void inviteUsers(@PathVariable Long id, @RequestBody BoardInviteDto dto) { //보드 초대
-        dto.setBoardId(id); //보드 아이디 설정
+    @PostMapping("/{id}/invitations")
+    public void inviteUsers(@PathVariable Long id, @RequestBody BoardInviteDto dto) {
+        dto.setBoardId(id);
         boardService.inviteUsersToBoard(dto);
     }
 }

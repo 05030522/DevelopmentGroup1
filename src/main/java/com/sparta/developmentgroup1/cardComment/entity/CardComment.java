@@ -5,9 +5,13 @@ import com.sparta.developmentgroup1.cardComment.dto.CardCommentRequestDto;
 import com.sparta.developmentgroup1.common.entity.Timestamped;
 import com.sparta.developmentgroup1.user.entity.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
+@AllArgsConstructor
 @Entity
 @Getter
 @NoArgsConstructor
@@ -20,15 +24,16 @@ public class CardComment extends Timestamped {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private String author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")//fk
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_id")//fk
+    @JoinColumn(name = "card_id", nullable = false)
     private Card card;
 
 
@@ -36,7 +41,10 @@ public class CardComment extends Timestamped {
         super();
         this.content = requestDto.getContent();
         this.card = card;
+    }
 
+    public void updateContent(String content) {
+        this.content = content;
     }
 
     public String getContent() {
@@ -55,7 +63,7 @@ public class CardComment extends Timestamped {
         this.card = card;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthor(User creator) {
+        this.creator = creator;
     }
 }
