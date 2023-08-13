@@ -8,7 +8,6 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -42,9 +41,6 @@ public class Board  extends Timestamped { //보드 엔티티
     // @Builder.Default
     // @OneToMany(mappedBy = "board", orphanRemoval = true)
     // private List<Area> areas = new ArrayList<>();
-
-    @ManyToMany
-    private Set<User> collaborators; //보드 공유하는 사람 예시
 
     public Board(BoardRequestDto requestDto, User creator) {
         this.name = requestDto.getName();

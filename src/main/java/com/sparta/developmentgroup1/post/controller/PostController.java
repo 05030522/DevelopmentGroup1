@@ -31,7 +31,7 @@ public class PostController {
     public ResponseEntity<ApiResponseDto> createPost(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                      @PathVariable Long boardId,
                                                      @RequestBody PostRequestDto requestDto) {
-        postService.createPost(userDetails, boardId, requestDto);
+        postService.createPost(userDetails.getUser(), boardId, requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseDto(HttpStatus.CREATED.value(), "포스트 생성 완료"));
     }
 
@@ -40,7 +40,7 @@ public class PostController {
                                                      @RequestBody PostRequestDto requestDto,
                                                      @PathVariable Long boardId,
                                                      @PathVariable Long postId) {
-        postService.updateName(userDetails, requestDto, boardId, postId);
+        postService.updateName(userDetails.getUser(), requestDto, boardId, postId);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDto(HttpStatus.OK.value(), "포스트 수정 완료"));
     }
 
@@ -48,7 +48,7 @@ public class PostController {
     public ResponseEntity<ApiResponseDto> deletePost(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                      @PathVariable Long boardId,
                                                      @PathVariable Long postId) {
-        postService.deletePost(userDetails, boardId, postId);
+        postService.deletePost(userDetails.getUser(), boardId, postId);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDto(HttpStatus.OK.value(), "포스트 삭제 완료"));
     }
 
@@ -57,7 +57,7 @@ public class PostController {
                                                     @PathVariable Long boardId,
                                                     @PathVariable Long postId,
                                                     @RequestBody PostMoveRequestDto requestDto) {
-        List<PostResponseDto> postList = postService.movePost(userDetails, boardId, postId, requestDto);
+        List<PostResponseDto> postList = postService.movePost(userDetails.getUser(), boardId, postId, requestDto);
         return ResponseEntity.ok().body(postList);
     }
 }

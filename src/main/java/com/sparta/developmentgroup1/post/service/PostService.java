@@ -1,13 +1,15 @@
 package com.sparta.developmentgroup1.post.service;
 
 import com.sparta.developmentgroup1.boards.entity.Board;
+import com.sparta.developmentgroup1.boards.entity.BoardUser;
 import com.sparta.developmentgroup1.boards.repository.BoardRepository;
-import com.sparta.developmentgroup1.common.security.UserDetailsImpl;
+import com.sparta.developmentgroup1.boards.repository.BoardUserRepository;
 import com.sparta.developmentgroup1.post.dto.PostMoveRequestDto;
 import com.sparta.developmentgroup1.post.dto.PostRequestDto;
 import com.sparta.developmentgroup1.post.dto.PostResponseDto;
 import com.sparta.developmentgroup1.post.entity.Post;
 import com.sparta.developmentgroup1.post.repository.PostRepository;
+import com.sparta.developmentgroup1.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final BoardRepository boardRepository;
-    // 협업 권한 설정을 위한 BoardUserRepository 추가 예정
+    private final BoardUserRepository boardUserRepository;
 
     @Transactional(readOnly = true)
     public List<PostResponseDto> getPost(Long boardId) {
@@ -30,12 +32,12 @@ public class PostService {
     }
 
     @Transactional
-    public void createPost(UserDetailsImpl userDetails, Long boardId, PostRequestDto requestDto) {
+    public void createPost(User loginUser, Long boardId, PostRequestDto requestDto) {
         Board board = boardRepository.findById(boardId).orElseThrow(
                 () -> new IllegalArgumentException("요청한 보드가 존재하지 않습니다.")
         );
 
-        // 콜라보레이터 조건 추가 예정
+        verifyCollaborator(boardId, loginUser); // 협업 초대되어있는 유저인지 확인
 
         int position = postRepository.findAllByBoardIdOrderByPositionAsc(boardId).size() + 1;
 
@@ -44,19 +46,19 @@ public class PostService {
     }
 
     @Transactional
-    public void updateName(UserDetailsImpl userDetails, PostRequestDto requestDto, Long boardId, Long postId) {
+    public void updateName(User loginUser, PostRequestDto requestDto, Long boardId, Long postId) {
         Post post = findPost(boardId, postId);
 
-        // 콜라보레이터 조건 추가 예정
+        verifyCollaborator(boardId, loginUser); // 협업 초대되어있는 유저인지 확인
 
-        post.update(requestDto.getName());
+        post.updateName(requestDto.getName());
     }
 
     @Transactional
-    public void deletePost(UserDetailsImpl userDetails, Long boardId, Long postId) {
+    public void deletePost(User loginUser, Long boardId, Long postId) {
         Post deletePost = findPost(boardId, postId);
 
-        // 콜라보레이터 조건 추가 예정
+        verifyCollaborator(boardId, loginUser); // 협업 초대되어있는 유저인지 확인
 
         // 삭제할 포스트의 position 보다 큰 position-1
         List<Post> posts = postRepository.findAllByBoardIdOrderByPositionAsc(boardId);
@@ -70,10 +72,10 @@ public class PostService {
     }
 
     @Transactional
-    public List<PostResponseDto> movePost(UserDetailsImpl userDetails, Long boardId, Long postId, PostMoveRequestDto requestDto) {
+    public List<PostResponseDto> movePost(User loginUser, Long boardId, Long postId, PostMoveRequestDto requestDto) {
         Post post = findPost(boardId, postId);
 
-        // 콜라보레이터 조건 추가 예정
+        verifyCollaborator(boardId, loginUser); // 협업 초대되어있는 유저인지 확인
 
         int newPosition = requestDto.getPosition();
         int currentPosition = post.getPosition();
@@ -113,5 +115,19 @@ public class PostService {
                 () -> new IllegalArgumentException("요청한 포스트가 존재하지 않습니다.")
         );
         return post;
+    }
+
+    private void verifyCollaborator(Long boardId, User loginUser) {
+        List<BoardUser> collaborators = boardUserRepository.findAllByBoardId(boardId);
+        boolean isCollaborator = false;
+        for (BoardUser collaborator : collaborators) {
+            if (collaborator.getCollaborator().getId().equals(loginUser.getId())) {
+                isCollaborator = true;
+                break;
+            }
+        }
+        if (!isCollaborator) {
+            throw new IllegalArgumentException("협업 등록된 사용자만 생성할 수 있습니다.");
+        }
     }
 }

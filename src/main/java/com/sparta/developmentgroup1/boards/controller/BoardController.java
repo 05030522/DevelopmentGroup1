@@ -46,7 +46,7 @@ public class BoardController {
     }
 
     @DeleteMapping("/boards/{boardId}/invitations/{userId}")
-    public ResponseEntity<ApiResponseDto> deletdUserFromBoard(@PathVariable Long boardId, @PathVariable Long userId) {
+    public ResponseEntity<ApiResponseDto> deleteUserFromBoard(@PathVariable Long boardId, @PathVariable Long userId) {
         boardService.deletedUserFromBoard(boardId, userId);
         ApiResponseDto response = new ApiResponseDto(HttpStatus.OK.value(), "사용자 삭제 완료");
         return ResponseEntity.status(HttpStatus.OK).body(response);
