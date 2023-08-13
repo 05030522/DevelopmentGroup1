@@ -46,17 +46,13 @@ public class Card extends Timestamped {
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-
     public Card(CardRequestDto requestDto, Post post, int positionIndex) {
-        this.title = requestDto.getTitle();
-        this.description = requestDto.getDescription();
-        this.background = requestDto.getBackground();
-        this.deadline = requestDto.getDeadline();
+        updateFromRequestDto(requestDto);
         this.positionIndex = positionIndex; // 생성자에서 받은 값으로 설정
         this.post = post;
     }
 
-    public Card update(CardRequestDto requestDto) {
+    public Card updateFromRequestDto(CardRequestDto requestDto) {
         if (requestDto.getTitle() != null) {
             this.title = requestDto.getTitle();
         }

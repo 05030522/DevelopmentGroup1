@@ -4,10 +4,7 @@ import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.card.dto.CardResponseDto;
 import com.sparta.developmentgroup1.card.service.CardService;
 import com.sparta.developmentgroup1.common.dto.MsgResponseDto;
-import com.sparta.developmentgroup1.common.security.UserDetailsImpl;
-import com.sparta.developmentgroup1.post.entity.Post;
 import com.sparta.developmentgroup1.user.entity.User;
-import com.sparta.developmentgroup1.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CardController {
     private final CardService cardService;
-
 
     @PostMapping("/cards") //카드 생성
     public ResponseEntity<CardResponseDto> createCard(@RequestBody CardRequestDto requestDto, Authentication authentication) {

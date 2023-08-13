@@ -39,8 +39,8 @@ public class CardService {
     @Transactional
     public CardResponseDto updateCard(Long cardId, CardRequestDto requestDto) {
         Card card = findCard(cardId);
-        card.update(requestDto);
-        return new CardResponseDto(card.update(requestDto));
+        card.updateFromRequestDto(requestDto);
+        return new CardResponseDto(card.updateFromRequestDto(requestDto));
     }
     // 카드 삭제
     @Transactional
