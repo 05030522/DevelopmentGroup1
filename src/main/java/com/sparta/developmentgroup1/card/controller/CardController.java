@@ -4,7 +4,10 @@ import com.sparta.developmentgroup1.card.dto.CardRequestDto;
 import com.sparta.developmentgroup1.card.dto.CardResponseDto;
 import com.sparta.developmentgroup1.card.service.CardService;
 import com.sparta.developmentgroup1.common.dto.MsgResponseDto;
+import com.sparta.developmentgroup1.common.security.UserDetailsImpl;
+import com.sparta.developmentgroup1.post.entity.Post;
 import com.sparta.developmentgroup1.user.entity.User;
+import com.sparta.developmentgroup1.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +19,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CardController {
     private final CardService cardService;
+    private final UserService userService;
 
-    @PostMapping("/cards") //카드 생성
+    @PostMapping("/cards") // 카드 생성
     public ResponseEntity<CardResponseDto> createCard(@RequestBody CardRequestDto requestDto, Authentication authentication) {
-        // Get the currently logged-in user from the authentication object
+        // 인증 객체에서 현재 로그인한 사용자 가져오기
         User user = (User) authentication.getPrincipal();
 
         CardResponseDto result = cardService.createCard(requestDto);
