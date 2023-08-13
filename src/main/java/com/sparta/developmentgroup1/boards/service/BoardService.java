@@ -28,6 +28,9 @@ public class BoardService {
         Board board = new Board(requestDto, creator);
         boardRepository.save(board); //보드 저장
 
+        BoardUser boardUser = new BoardUser(board, creator);
+        boardUserRepository.save(boardUser);
+
         return new BoardResponseDto(board); //보드 생성 결과 반환
     }
 
