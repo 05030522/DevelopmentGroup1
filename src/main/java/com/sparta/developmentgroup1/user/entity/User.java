@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @Table(name = "users")
 @EqualsAndHashCode(of="id")
@@ -29,7 +28,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String nickname;
 
     @Column(nullable = false, unique = true)
@@ -61,5 +60,9 @@ public class User {
         this.nickname = nickname;
         this.email = email;
         this.role = role;
+    }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

@@ -39,7 +39,7 @@ public class Post {
 
     }
 
-    public void setPosition(int position) {
+    public void movePosition(int position) {
         this.position = position;
     }
 
