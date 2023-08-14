@@ -47,12 +47,12 @@ public class Card extends Timestamped {
     private List<Comment> comments = new ArrayList<>();
 
     public Card(CardRequestDto requestDto, Post post, int positionIndex) {
-        updateFromRequestDto(requestDto);
+        updateCard(requestDto);
         this.positionIndex = positionIndex; // 생성자에서 받은 값으로 설정
         this.post = post;
     }
 
-    public Card updateFromRequestDto(CardRequestDto requestDto) {
+    public Card updateCard(CardRequestDto requestDto) {
         if (requestDto.getTitle() != null) {
             this.title = requestDto.getTitle();
         }
@@ -68,17 +68,7 @@ public class Card extends Timestamped {
         return this;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void updateDeadline(LocalDateTime deadline) {
+        this.deadline = deadline;
     }
-
-    public void setPosition(int position) {
-        this.positionIndex = position;
-    }
-
-    public void addComment(Comment comment) {
-        comments.add(comment);
-        comment.setCard(this);
-    }
-
 }

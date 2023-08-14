@@ -25,45 +25,21 @@ public class Comment extends Timestamped {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "creator_id", nullable = false)
+    @JoinColumn(name = "creator_id")//fk
     private User creator;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")//fk
-    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id", nullable = false)
     private Card card;
 
 
-    public Comment(CommentRequestDto requestDto, Card card) {
-        super();
+    public Comment(CommentRequestDto requestDto, Card card, User creator) {
         this.content = requestDto.getContent();
         this.card = card;
+        this.creator = creator;
     }
 
     public void updateContent(String content) {
         this.content = content;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setCard(Card card) {
-        this.card = card;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
     }
 }

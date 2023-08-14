@@ -1,4 +1,4 @@
-package com.sparta.developmentgroup1.cardUser.entity;
+package com.sparta.developmentgroup1.card.entity;
 
 import com.sparta.developmentgroup1.card.entity.Card;
 import com.sparta.developmentgroup1.user.entity.User;
@@ -18,16 +18,16 @@ public class CardUser {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User collaborator;
+    @JoinColumn(name = "member_id", nullable = false)
+    private User member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
     private Card card;
 
-    public CardUser(User collaborator, Card card) {
-        this.collaborator = collaborator;
+    public CardUser(Card card, User member) {
         this.card = card;
+        this.member = member;
     }
 
 }
