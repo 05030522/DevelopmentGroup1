@@ -26,7 +26,6 @@ public class PostService {
     private final PostRepository postRepository;
     private final BoardRepository boardRepository;
     private final BoardUserRepository boardUserRepository;
-    private final CardService cardService;
 
     @Transactional(readOnly = true)
     public List<PostResponseDto> getPost(Long boardId) {
@@ -46,29 +45,6 @@ public class PostService {
 
         Post post = new Post(requestDto.getName(), position, board);
         postRepository.save(post);
-    }
-
-    @Transactional
-    public void createPostWithCard(User loginUser, Long boardId, PostRequestDto requestDto, CardRequestDto cardRequestDto) {
-        Board board = boardRepository.findById(boardId).orElseThrow(
-                () -> new IllegalArgumentException("요청한 보드가 존재하지 않습니다.")
-        );
-
-        verifyCollaborator(boardId, loginUser); // 협업 초대되어있는 유저인지 확인
-
-        int position = postRepository.findAllByBoardIdOrderByPositionAsc(boardId).size() + 1;
-
-        Post post = new Post(requestDto.getName(), position, board);
-        postRepository.save(post);
-
-        // 카드 생성
-        CardRequestDto cardDto = new CardRequestDto();
-        cardDto.setTitle(cardRequestDto.getTitle());
-        cardDto.setDescription(cardRequestDto.getDescription());
-        cardDto.setBackground(cardRequestDto.getBackground());
-        cardDto.setDeadline(cardRequestDto.getDeadline());
-
-        cardService.createCard(cardDto, loginUser);
     }
 
     @Transactional

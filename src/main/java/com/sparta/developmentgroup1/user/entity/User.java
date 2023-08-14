@@ -3,7 +3,7 @@ package com.sparta.developmentgroup1.user.entity;
 import com.sparta.developmentgroup1.boards.entity.Board;
 import com.sparta.developmentgroup1.boards.entity.BoardUser;
 import com.sparta.developmentgroup1.comment.entity.Comment;
-import com.sparta.developmentgroup1.cardUser.entity.CardUser;
+import com.sparta.developmentgroup1.card.entity.CardUser;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -43,7 +43,7 @@ public class User {
     private List<BoardUser> boardUsers = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "collaborator", orphanRemoval = true) // 작업자 필드명 수정 고려
+    @OneToMany(mappedBy = "member", orphanRemoval = true) // 작업자 필드명 수정 고려
     private List<CardUser> cardUsers = new ArrayList<>();
 
     @Builder.Default

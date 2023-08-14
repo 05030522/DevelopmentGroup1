@@ -24,9 +24,4 @@ public abstract class Timestamped { //타임스탬프
     @Column(name = "modify_time")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime modifiedAt;
-
-    @Column(name = "deadline")
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime deadline;
-
 }
