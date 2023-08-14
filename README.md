@@ -12,7 +12,6 @@
 
 
 
-
 팀장 : 이경원님
 
 팀원 : 권진혁님, 이승현님, 최신혜님
@@ -101,42 +100,29 @@ ex) Backlog, In Progress, Done → Backlog, Done, In Progress
 
 
 
-              
-💡 추가 구현
-
-
-
 💡 사용한 기술
 
 <img width="148" alt="기술스택" src="https://github.com/05030522/DevelopmentGroup1/assets/132440453/5af3d483-e79c-4c76-a932-d523ba77e38d">
 
 
 
-
-💡 그 외 구현 포인트
-
 [💡 와이어 프레임](https://docs.google.com/presentation/d/1AIsqyn0MsqOcSKQ8VMwY3nK1SHSM6JjKOdSBWeQ9ZJQ/edit#slide=id.p)
-
-
-
 
 
 
 💡 API
 
-<img width="233" alt="api" src="https://github.com/05030522/DevelopmentGroup1/assets/132440453/4aa04d53-b6dc-4e1e-8aba-5db9c3698274">
-
-
-
+<img width="800" alt="api" src="https://github.com/05030522/DevelopmentGroup1/assets/121823367/8d1ee83e-2ea6-4b14-9bf0-693a209109c7">
+<img width="800" alt="api" src="https://github.com/05030522/DevelopmentGroup1/assets/121823367/9e0d5752-a96d-4997-aefe-fb03bab29075">
+<img width="800" alt="api" src="https://github.com/05030522/DevelopmentGroup1/assets/121823367/88875d62-2881-475a-afe0-ffa2dd954385">
+<img width="800" alt="api" src="https://github.com/05030522/DevelopmentGroup1/assets/121823367/890890ab-8c1d-4918-999e-699857db23be">
+<img width="800" alt="api" src="https://github.com/05030522/DevelopmentGroup1/assets/121823367/8d542124-2c5b-4828-b93a-15ce262553a3">
 
 
 
 💡 ERD
 
-![ERD](https://github.com/05030522/DevelopmentGroup1/assets/132440453/0a03ed4e-551b-41d9-a5eb-2059ba455dc7)
-
-
-
+![ERD](https://github.com/05030522/DevelopmentGroup1/assets/121823367/eaa0ab15-26a9-4ff4-aacb-cc25f85d37b6)
 
 
 
