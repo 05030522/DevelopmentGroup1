@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class CardResponseDto extends MsgResponseDto {
+    private String postName;
     private String title;
     private String description;
     private String background;
@@ -20,6 +21,7 @@ public class CardResponseDto extends MsgResponseDto {
 
 
     public CardResponseDto(Card card){
+        this.postName = card.getPost().getName();
         this.positionIndex = card.getPositionIndex();
         this.title = card.getTitle();
         this.description = card.getDescription();
