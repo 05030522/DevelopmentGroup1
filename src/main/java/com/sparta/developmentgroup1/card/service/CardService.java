@@ -8,6 +8,7 @@ import com.sparta.developmentgroup1.card.entity.Card;
 import com.sparta.developmentgroup1.card.repository.CardRepository;
 import com.sparta.developmentgroup1.post.entity.Post;
 import com.sparta.developmentgroup1.post.repository.PostRepository;
+import com.sparta.developmentgroup1.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,8 @@ public class CardService {
     private final CardRepository cardRepository;
 
     // 카드 생성
-    public CardResponseDto createCard(CardRequestDto requestDto) {
+    @Transactional
+    public CardResponseDto createCard(CardRequestDto requestDto, User user) {
         //칼럼 있는지 확인
         Post post = postRepository.findById(requestDto.getPostId()).orElseThrow(()->new IllegalArgumentException("존재하지 않는 포스트입니다."));
         int lastPosition = post.getCardList().size();
@@ -37,8 +39,8 @@ public class CardService {
     @Transactional
     public CardResponseDto updateCard(Long cardId, CardRequestDto requestDto) {
         Card card = findCard(cardId);
-        card.update(requestDto);
-        return new CardResponseDto(card.update(requestDto));
+        card.updateFromRequestDto(requestDto);
+        return new CardResponseDto(card.updateFromRequestDto(requestDto));
     }
     // 카드 삭제
     @Transactional
