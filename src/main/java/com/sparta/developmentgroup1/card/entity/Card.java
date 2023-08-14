@@ -48,8 +48,8 @@ public class Card extends Timestamped {
 
     public Card(CardRequestDto requestDto, Post post, int positionIndex) {
         updateCard(requestDto);
-        this.positionIndex = positionIndex; // 생성자에서 받은 값으로 설정
         this.post = post;
+        this.positionIndex = positionIndex; // 생성자에서 받은 값으로 설정
     }
 
     public Card updateCard(CardRequestDto requestDto) {
@@ -70,5 +70,13 @@ public class Card extends Timestamped {
 
     public void updateDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
+    }
+
+    public void movePositionIndex(int positionIndex) {
+        this.positionIndex = positionIndex;
+    }
+
+    public void movePost(Post post) {
+        this.post = post;
     }
 }

@@ -86,11 +86,8 @@ public class PostService {
         if (currentPosition != newPosition) {
             List<Post> posts = postRepository.findAllByBoardIdOrderByPositionAsc(boardId);
 
-            // 재배치를 위해 목록에서 해당 포스트 제거
-            posts.remove(post);
             // 새 위치가 유효한 범위 내에 있는지 확인
             newPosition = Math.min(Math.max(newPosition, 1), posts.size() + 1);
-
             // 이동 방향에 따라 다른 포스트 위치 조정
             if (currentPosition < newPosition) {
                 for (Post p : posts) {
@@ -105,7 +102,7 @@ public class PostService {
                     }
                 }
             }
-            // 이동된 포스트의 새 위치 설정
+            // 포스트의 새 위치 설정
             post.movePosition(newPosition);
         }
         return postRepository.findAllByBoardIdOrderByPositionAsc(boardId).stream().map(PostResponseDto::new)
