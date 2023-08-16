@@ -57,6 +57,7 @@ jobs:
           echo "${{ secrets.APPLICATION_KEY_YML }}" > ./application-key.yml
         shell: bash
 
+
       # gradle 실행 허가
       - name: Run chmod to make gradlew executable
         run: chmod +x ./gradlew
