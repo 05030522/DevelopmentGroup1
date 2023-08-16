@@ -1,13 +1,12 @@
 package com.sparta.developmentgroup1.card.entity;
 
-import com.sparta.developmentgroup1.card.entity.Card;
 import com.sparta.developmentgroup1.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Entity(name = "CardUserEntity")
 @Getter
 @Setter
 @Table(name = "card_users")
